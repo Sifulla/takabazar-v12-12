@@ -28,26 +28,6 @@ const paymentSettings=()=>({
 });
 const todayStart=()=>{const d=new Date();d.setHours(0,0,0,0);return d.toISOString()};
 const payoutMethod=v=>["bkash","nagad"].includes(String(v||"").toLowerCase())?String(v).toLowerCase():"";
-const MAX_PAYOUT_ACCOUNTS=4;
-const listPayoutAccounts=userId=>db.prepare(
-  "SELECT id,slot_no,method,number,locked,created_at FROM payout_accounts WHERE user_id=? ORDER BY slot_no,id"
-).all(userId);
-function addPayoutAccount(userId,methodRaw,numberRaw){
-  const method=payoutMethod(methodRaw),number=String(numberRaw||"").replace(/\D/g,"").slice(0,11);
-  if(!method){const e=new Error("bKash অথবা Nagad নির্বাচন করুন");e.status=400;throw e}
-  if(!/^01\d{9}$/.test(number)){const e=new Error("সঠিক ১১ সংখ্যার মোবাইল ওয়ালেট নম্বর লিখুন");e.status=400;throw e}
-  const count=Number(db.prepare("SELECT COUNT(*) n FROM payout_accounts WHERE user_id=?").get(userId)?.n||0);
-  if(count>=MAX_PAYOUT_ACCOUNTS){const e=new Error("সর্বোচ্চ ৪টি উত্তোলন অ্যাকাউন্ট রাখা যাবে");e.status=409;throw e}
-  const slot=count+1,now=new Date().toISOString();
-  // Deliberately no uniqueness check on number: same number may be added again.
-  const r=db.prepare("INSERT INTO payout_accounts(user_id,slot_no,method,number,locked,created_at) VALUES(?,?,?,?,1,?)")
-    .run(userId,slot,method,number,now);
-  // Keep old columns populated for backwards compatibility only.
-  db.prepare("UPDATE users SET payout_method=?,payout_number=? WHERE id=?").run(method,number,userId);
-  audit("PAYOUT_ACCOUNT_ADD",{userId,slot,method,number});
-  notify(userId,"উত্তোলন অ্যাকাউন্ট যোগ হয়েছে",`${method.toUpperCase()} ${number} • Slot ${slot}`,"info");
-  return {id:Number(r.lastInsertRowid),slot_no:slot,method,number,locked:1,created_at:now};
-}
 const safeMediaUrl=v=>{const s=String(v||"").trim().slice(0,500);return !s||s.startsWith("/game-assets/")||/^https:\/\/[^\s]+$/i.test(s)?s:""};
 const boolInt=v=>v===true||v===1||v==="1"?1:0;
 const DEMO_ADMIN_CONTROLS=String(process.env.TAKABAZAR_DEMO_ADMIN_CONTROLS||"1")!=="0";
@@ -100,34 +80,13 @@ app.post("/api/login",authLimit,(req,res)=>{const phone=bdPhone(req.body.phone),
 app.post("/api/logout",userAuth,(req,res)=>{db.prepare("DELETE FROM sessions WHERE id=?").run(req.user.session_id);res.json({success:true})});
 app.get("/api/me",userAuth,(req,res)=>{const u=db.prepare("SELECT * FROM users WHERE id=?").get(req.user.user_id);res.json({success:true,user:publicUser(u),payout:{method:u.payout_method||"",number:u.payout_number||""}})});
 app.get("/api/wallet",userAuth,(req,res)=>{const u=getUserById(req.user.user_id);const pendingDeposits=db.prepare("SELECT COUNT(*) n FROM deposits WHERE user_id=? AND status='Pending'").get(u.id).n,pendingWithdrawals=db.prepare("SELECT COUNT(*) n FROM withdrawals WHERE user_id=? AND status='Pending'").get(u.id).n;res.json({success:true,wallet:publicUser(u),limits:limits(),pending:{deposits:pendingDeposits,withdrawals:pendingWithdrawals}})});
-app.get("/api/account/payout",userAuth,(req,res)=>{
-  const accounts=listPayoutAccounts(req.user.user_id);
-  const first=accounts[0]||null;
-  res.json({
-    success:true,
-    payout:first?{method:first.method,number:first.number}:{method:"",number:""},
-    accounts,
-    maxAccounts:MAX_PAYOUT_ACCOUNTS,
-    locked:true
-  })
-});
-app.post("/api/account/payout-accounts",userAuth,authLimit,(req,res)=>{
-  try{
-    const account=addPayoutAccount(req.user.user_id,req.body.method,req.body.number);
-    res.json({success:true,account,accounts:listPayoutAccounts(req.user.user_id),maxAccounts:MAX_PAYOUT_ACCOUNTS})
-  }catch(e){
-    res.status(e.status||400).json({success:false,message:e.message||"Account add failed"})
-  }
-});
-// Legacy endpoint kept for old clients, but it is append-only now.
-// Existing saved accounts cannot be edited or deleted.
-app.put("/api/account/payout",userAuth,authLimit,(req,res)=>{
-  try{
-    const account=addPayoutAccount(req.user.user_id,req.body.method,req.body.number);
-    res.json({success:true,payout:{method:account.method,number:account.number},account,accounts:listPayoutAccounts(req.user.user_id)})
-  }catch(e){
-    res.status(e.status||400).json({success:false,message:e.message||"Account add failed"})
-  }
+app.get("/api/account/payout",userAuth,(req,res)=>{const u=db.prepare("SELECT payout_method,payout_number FROM users WHERE id=?").get(req.user.user_id);res.json({success:true,payout:{method:u?.payout_method||"",number:u?.payout_number||""}})});
+app.put("/api/account/payout",userAuth,(req,res)=>{
+  const method=payoutMethod(req.body.method),number=String(req.body.number||"").replace(/\D/g,"").slice(0,11);
+  if(!method)return res.status(400).json({success:false,message:"Select bKash or Nagad"});
+  if(!/^01\d{9}$/.test(number))return res.status(400).json({success:false,message:"Enter a valid 11-digit mobile wallet number"});
+  db.prepare("UPDATE users SET payout_method=?,payout_number=? WHERE id=?").run(method,number,req.user.user_id);
+  res.json({success:true,payout:{method,number}})
 });
 
 app.get("/api/member/summary",userAuth,(req,res)=>{
@@ -160,9 +119,8 @@ app.put("/api/account/password",userAuth,authLimit,(req,res)=>{
   if(next.length<6||next.length>128)return res.status(400).json({success:false,message:"New password must be 6-128 characters"});
   if(current===next)return res.status(400).json({success:false,message:"Choose a different new password"});
   db.prepare("UPDATE users SET password_hash=? WHERE id=?").run(hashPassword(next),u.id);
-  db.prepare("DELETE FROM sessions WHERE user_id=? AND id<>?").run(u.id,req.user.session_id);
   audit("PASSWORD_CHANGE",{userId:u.id});
-  notify(u.id,"পাসওয়ার্ড আপডেট হয়েছে","আপনার অ্যাকাউন্ট পাসওয়ার্ড সফলভাবে পরিবর্তন হয়েছে। অন্য ডিভাইসের সেশন বন্ধ করা হয়েছে।","success");
+  notify(u.id,"Security update","Your password was changed successfully.","success");
   res.json({success:true})
 });
 app.get("/api/transactions",userAuth,(req,res)=>{const type=safeText(req.query.type,40);const rows=type&&type!=="all"?db.prepare("SELECT id,type,amount,balance_after,held_after,note,ref_id,created_at FROM ledger WHERE user_id=? AND type=? ORDER BY id DESC LIMIT 200").all(req.user.user_id,type):db.prepare("SELECT id,type,amount,balance_after,held_after,note,ref_id,created_at FROM ledger WHERE user_id=? ORDER BY id DESC LIMIT 200").all(req.user.user_id);res.json({success:true,rows})});
@@ -198,13 +156,11 @@ app.post("/api/deposits",moneyLimit,userAuth,(req,res)=>{
 
 app.post("/api/withdrawals",moneyLimit,userAuth,(req,res)=>{
   const amount=intAmount(req.body.amount),note=safeText(req.body.note,180),clientKey=safeText(req.body.clientKey,100)||null,L=limits();
-  const payoutAccountId=Number(req.body.payoutAccountId||0);
-  const account=payoutAccountId?db.prepare(
-    "SELECT id,method,number FROM payout_accounts WHERE id=? AND user_id=?"
-  ).get(payoutAccountId,req.user.user_id):null;
-  if(!account)return res.status(400).json({success:false,message:"সেভ করা উত্তোলন অ্যাকাউন্ট নির্বাচন করুন"});
-  const method=payoutMethod(account.method),number=String(account.number||"");
-  if(!method||!/^01\d{9}$/.test(number))return res.status(400).json({success:false,message:"উত্তোলন অ্যাকাউন্টটি সঠিক নয়"});
+  let method=payoutMethod(req.body.payoutMethod),number=String(req.body.payoutNumber||"").replace(/\D/g,"").slice(0,11);
+  const saved=db.prepare("SELECT payout_method,payout_number FROM users WHERE id=?").get(req.user.user_id);
+  if(!method)method=payoutMethod(saved?.payout_method);if(!number)number=String(saved?.payout_number||"");
+  if(!method)return res.status(400).json({success:false,message:"Select bKash or Nagad for withdrawal"});
+  if(!/^01\d{9}$/.test(number))return res.status(400).json({success:false,message:"Enter a valid 11-digit withdrawal number"});
   if(amount<L.minWithdraw||amount>L.maxWithdraw)return res.status(400).json({success:false,message:`Withdrawal must be ${L.minWithdraw}-${L.maxWithdraw} credits`});
   if(clientKey){const old=db.prepare("SELECT tx_id,status FROM withdrawals WHERE user_id=? AND client_key=?").get(req.user.user_id,clientKey);if(old)return res.json({success:true,duplicate:true,txId:old.tx_id,status:old.status})}
   const used=Number(db.prepare("SELECT COALESCE(SUM(amount),0) n FROM withdrawals WHERE user_id=? AND status IN ('Pending','Approved') AND created_at>=?").get(req.user.user_id,todayStart()).n||0);
@@ -215,7 +171,7 @@ app.post("/api/withdrawals",moneyLimit,userAuth,(req,res)=>{
     const av=Number(u.available_balance)-amount,held=Number(u.held_balance)+amount,id=txId("WDR"),now=new Date().toISOString();
     db.prepare("UPDATE users SET available_balance=?,held_balance=?,payout_method=?,payout_number=? WHERE id=?").run(av,held,method,number,u.id);
     db.prepare("INSERT INTO withdrawals(tx_id,user_id,amount,status,note,client_key,payout_method,payout_number,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?,?,?)").run(id,u.id,amount,"Pending",note,clientKey,method,number,now,now);
-    addLedger(u.id,"WITHDRAW_HOLD",-amount,av,held,"Credits moved to hold",id,{payoutMethod:method,payoutAccountId});
+    addLedger(u.id,"WITHDRAW_HOLD",-amount,av,held,"Credits moved to hold",id,{payoutMethod:method});
     notify(u.id,"Withdrawal request received",`${id} is pending review for ${method.toUpperCase()} ${number}.`,"info");
     db.exec("COMMIT");res.json({success:true,txId:id,status:"Pending",wallet:{available:av,held,total:av+held},payout:{method,number}})
   }catch(e){try{db.exec("ROLLBACK")}catch{};res.status(500).json({success:false,message:"Withdrawal request failed"})}
@@ -288,8 +244,8 @@ app.patch("/api/admin/settings/payment",adminAuth,(req,res)=>{
   res.json({success:true,payment:paymentSettings()})
 });
 
-app.patch("/api/admin/deposits/:txId",adminAuth,(req,res)=>{const status=String(req.body.status||""),adminNote=safeText(req.body.adminNote,200);if(!["Approved","Rejected"].includes(status))return res.status(400).json({success:false,message:"Invalid status"});db.exec("BEGIN IMMEDIATE");try{const d=db.prepare("SELECT * FROM deposits WHERE tx_id=?").get(req.params.txId);if(!d){db.exec("ROLLBACK");return res.status(404).json({success:false,message:"Request not found"})}if(d.status!=="Pending"){db.exec("ROLLBACK");return res.status(409).json({success:false,message:"Request already finalized"})}const now=new Date().toISOString();if(status==="Approved"){const u=db.prepare("SELECT * FROM users WHERE id=?").get(d.user_id),av=Number(u.available_balance)+Number(d.amount);db.prepare("UPDATE users SET available_balance=? WHERE id=?").run(av,u.id);addLedger(u.id,"DEPOSIT",Number(d.amount),av,Number(u.held_balance),"Deposit approved",d.tx_id);notify(u.id,"ডিপোজিট সফল",`${d.amount} টাকা আপনার ব্যালেন্সে যোগ হয়েছে। ID: ${d.tx_id}`,"success")}else notify(d.user_id,"Deposit rejected",adminNote||"Your request was rejected.","warning");db.prepare("UPDATE deposits SET status=?,admin_note=?,updated_at=? WHERE tx_id=?").run(status,adminNote,now,d.tx_id);audit("DEPOSIT_STATUS",{txId:d.tx_id,status,amount:d.amount,userId:d.user_id});db.exec("COMMIT");res.json({success:true})}catch(e){try{db.exec("ROLLBACK")}catch{};res.status(500).json({success:false,message:"Update failed"})}});
-app.patch("/api/admin/withdrawals/:txId",adminAuth,(req,res)=>{const status=String(req.body.status||""),adminNote=safeText(req.body.adminNote,200);if(!["Approved","Rejected"].includes(status))return res.status(400).json({success:false,message:"Invalid status"});db.exec("BEGIN IMMEDIATE");try{const w=db.prepare("SELECT * FROM withdrawals WHERE tx_id=?").get(req.params.txId);if(!w){db.exec("ROLLBACK");return res.status(404).json({success:false,message:"Request not found"})}if(w.status!=="Pending"){db.exec("ROLLBACK");return res.status(409).json({success:false,message:"Request already finalized"})}const u=db.prepare("SELECT * FROM users WHERE id=?").get(w.user_id),amount=Number(w.amount);if(Number(u.held_balance)<amount)throw new Error("Held balance is inconsistent");let av=Number(u.available_balance),held=Number(u.held_balance)-amount;if(status==="Rejected"){av+=amount;db.prepare("UPDATE users SET available_balance=?,held_balance=? WHERE id=?").run(av,held,u.id);addLedger(u.id,"WITHDRAW_RELEASE",amount,av,held,"Withdrawal hold released",w.tx_id);notify(u.id,"Withdrawal rejected",adminNote||"Held credits were returned to your available balance.","warning")}else{db.prepare("UPDATE users SET held_balance=? WHERE id=?").run(held,u.id);addLedger(u.id,"WITHDRAWAL",-amount,av,held,"Withdrawal approved",w.tx_id);notify(u.id,"উত্তোলন সফল",`${amount} টাকা ${String(w.payout_method||"").toUpperCase()} ${w.payout_number||""} নম্বরে অনুমোদিত হয়েছে। ID: ${w.tx_id}`,"success")}db.prepare("UPDATE withdrawals SET status=?,admin_note=?,updated_at=? WHERE tx_id=?").run(status,adminNote,new Date().toISOString(),w.tx_id);audit("WITHDRAW_STATUS",{txId:w.tx_id,status,amount,userId:w.user_id});db.exec("COMMIT");res.json({success:true})}catch(e){try{db.exec("ROLLBACK")}catch{};res.status(500).json({success:false,message:e.message||"Update failed"})}});
+app.patch("/api/admin/deposits/:txId",adminAuth,(req,res)=>{const status=String(req.body.status||""),adminNote=safeText(req.body.adminNote,200);if(!["Approved","Rejected"].includes(status))return res.status(400).json({success:false,message:"Invalid status"});db.exec("BEGIN IMMEDIATE");try{const d=db.prepare("SELECT * FROM deposits WHERE tx_id=?").get(req.params.txId);if(!d){db.exec("ROLLBACK");return res.status(404).json({success:false,message:"Request not found"})}if(d.status!=="Pending"){db.exec("ROLLBACK");return res.status(409).json({success:false,message:"Request already finalized"})}const now=new Date().toISOString();if(status==="Approved"){const u=db.prepare("SELECT * FROM users WHERE id=?").get(d.user_id),av=Number(u.available_balance)+Number(d.amount);db.prepare("UPDATE users SET available_balance=? WHERE id=?").run(av,u.id);addLedger(u.id,"DEPOSIT",Number(d.amount),av,Number(u.held_balance),"Deposit approved",d.tx_id);notify(u.id,"Deposit approved",`${d.amount} credits added to your balance.`,"success")}else notify(d.user_id,"Deposit rejected",adminNote||"Your request was rejected.","warning");db.prepare("UPDATE deposits SET status=?,admin_note=?,updated_at=? WHERE tx_id=?").run(status,adminNote,now,d.tx_id);audit("DEPOSIT_STATUS",{txId:d.tx_id,status,amount:d.amount,userId:d.user_id});db.exec("COMMIT");res.json({success:true})}catch(e){try{db.exec("ROLLBACK")}catch{};res.status(500).json({success:false,message:"Update failed"})}});
+app.patch("/api/admin/withdrawals/:txId",adminAuth,(req,res)=>{const status=String(req.body.status||""),adminNote=safeText(req.body.adminNote,200);if(!["Approved","Rejected"].includes(status))return res.status(400).json({success:false,message:"Invalid status"});db.exec("BEGIN IMMEDIATE");try{const w=db.prepare("SELECT * FROM withdrawals WHERE tx_id=?").get(req.params.txId);if(!w){db.exec("ROLLBACK");return res.status(404).json({success:false,message:"Request not found"})}if(w.status!=="Pending"){db.exec("ROLLBACK");return res.status(409).json({success:false,message:"Request already finalized"})}const u=db.prepare("SELECT * FROM users WHERE id=?").get(w.user_id),amount=Number(w.amount);if(Number(u.held_balance)<amount)throw new Error("Held balance is inconsistent");let av=Number(u.available_balance),held=Number(u.held_balance)-amount;if(status==="Rejected"){av+=amount;db.prepare("UPDATE users SET available_balance=?,held_balance=? WHERE id=?").run(av,held,u.id);addLedger(u.id,"WITHDRAW_RELEASE",amount,av,held,"Withdrawal hold released",w.tx_id);notify(u.id,"Withdrawal rejected",adminNote||"Held credits were returned to your available balance.","warning")}else{db.prepare("UPDATE users SET held_balance=? WHERE id=?").run(held,u.id);addLedger(u.id,"WITHDRAWAL",-amount,av,held,"Withdrawal approved",w.tx_id);notify(u.id,"Withdrawal approved",`${amount} held credits were finalized.`,"success")}db.prepare("UPDATE withdrawals SET status=?,admin_note=?,updated_at=? WHERE tx_id=?").run(status,adminNote,new Date().toISOString(),w.tx_id);audit("WITHDRAW_STATUS",{txId:w.tx_id,status,amount,userId:w.user_id});db.exec("COMMIT");res.json({success:true})}catch(e){try{db.exec("ROLLBACK")}catch{};res.status(500).json({success:false,message:e.message||"Update failed"})}});
 app.patch("/api/admin/settings/limits",adminAuth,(req,res)=>{const keys={minDeposit:"min_deposit",maxDeposit:"max_deposit",minWithdraw:"min_withdraw",maxWithdraw:"max_withdraw",dailyWithdraw:"daily_withdraw"};for(const [k,key] of Object.entries(keys)){if(req.body[k]!==undefined){const n=intAmount(req.body[k]);if(!n)return res.status(400).json({success:false,message:`Invalid ${k}`});setSetting(key,n)}}audit("LIMITS_UPDATE",limits());res.json({success:true,limits:limits()})});
 
 

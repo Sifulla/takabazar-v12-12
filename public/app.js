@@ -1,4 +1,4 @@
-const $=id=>document.getElementById(id);let token=localStorage.getItem("tb_token")||"",adminToken=sessionStorage.getItem("tb_admin_token")||"",me=null,games=[],selectedGame=null,selectedPick=null,moneyMode="deposit",moneyStep=1,siteLimits={},paymentConfig={bkash:{enabled:false,number:""},nagad:{enabled:false,number:""}},payoutAccount={method:"",number:""},payoutAccounts=[],selectedPayoutAccountId=0,lastNotificationId=0,notificationPollTimer=null,homeContent={banners:[],promotions:[]},memberSummary={},adminGameMode=false,adminViewerGame=null,activeCrashRoundId=null,bannerIndex=0,bannerTimer=null,logoTaps=[];
+const $=id=>document.getElementById(id);let token=localStorage.getItem("tb_token")||"",adminToken=sessionStorage.getItem("tb_admin_token")||"",me=null,games=[],selectedGame=null,selectedPick=null,moneyMode="deposit",moneyStep=1,siteLimits={},paymentConfig={bkash:{enabled:false,number:""},nagad:{enabled:false,number:""}},payoutAccount={method:"",number:""},homeContent={banners:[],promotions:[]},memberSummary={},adminGameMode=false,adminViewerGame=null,activeCrashRoundId=null,bannerIndex=0,bannerTimer=null,logoTaps=[];
 let loadingDepth=0,loadingSlowTimer=null,progressTimer=null;
 let loadingVisibleAt=0,loadingOpenTimer=null,loadingPhaseTimers=[];
 async function fetchJson(url,opt={},admin=false){
@@ -147,7 +147,7 @@ function renderAccount(){
 async function register(){
   try{await withLoading("অ্যাকাউন্ট তৈরি হচ্ছে","তথ্য যাচাই করা হচ্ছে...",async()=>{
     const d=await api("/api/register",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:$("regName").value.trim(),phone:$("regPhone").value.trim(),password:$("regPassword").value})});
-    token=d.token;localStorage.setItem("tb_token",token);me=d.user;setWallet(me);renderAccount();closeModal("accountModal");await refreshPrivate()
+    token=d.token;localStorage.setItem("tb_token",token);me=d.user;payoutAccount=d.payout||payoutAccount;setWallet(me);renderAccount();closeModal("accountModal");await refreshPrivate()
   });showActionResult("success","অ্যাকাউন্ট তৈরি হয়েছে","আপনার TakaBazar account প্রস্তুত।")}
   catch(e){showActionResult("error","অ্যাকাউন্ট তৈরি হয়নি",e.message)}
 }
@@ -160,7 +160,7 @@ async function login(){
 }
 function askLogout(){openModal("logoutModal")}
 async function confirmLogout(){closeModal("logoutModal");await logout()}
-async function logout(){try{await api("/api/logout",{method:"POST"})}catch{}token="";me=null;memberSummary={};payoutAccount={method:"",number:""};payoutAccounts=[];selectedPayoutAccountId=0;lastNotificationId=0;clearInterval(notificationPollTimer);notificationPollTimer=null;localStorage.removeItem("tb_token");setWallet({available:0,held:0,total:0});renderAccount();["ledgerList","betList","paymentList","notificationList","ticketList"].forEach(id=>{if($(id))$(id).innerHTML='<p class="muted">Login to view this section.</p>'});toast("Logged out");openAccount()}
+async function logout(){try{await api("/api/logout",{method:"POST"})}catch{}token="";me=null;memberSummary={};payoutAccount={method:"",number:""};localStorage.removeItem("tb_token");setWallet({available:0,held:0,total:0});renderAccount();["ledgerList","betList","paymentList","notificationList","ticketList"].forEach(id=>{if($(id))$(id).innerHTML='<p class="muted">Login to view this section.</p>'});toast("Logged out");openAccount()}
 async function loadMe(){if(!token){me=null;setWallet({});return}try{const d=await api("/api/me");me=d.user;payoutAccount=d.payout||payoutAccount;setWallet(me)}catch{token="";me=null;localStorage.removeItem("tb_token");setWallet({})}}
 async function loadConfig(){try{const d=await api("/api/config");siteLimits=d.limits||{};paymentConfig=d.payment||paymentConfig}catch{}}
 function bannerAction(target){if(["games","wallet","promotions","notifications","support"].includes(String(target||"")))go(target)}
@@ -169,19 +169,7 @@ function showBanner(i){bannerIndex=i;renderBanner();restartBannerTimer()}
 function restartBannerTimer(){clearInterval(bannerTimer);if((homeContent.banners||[]).length>1)bannerTimer=setInterval(()=>{bannerIndex++;renderBanner()},4500)}
 function renderPromotions(){const el=$("promotionGrid"),list=homeContent.promotions||[];if(!el)return;el.innerHTML=list.length?list.map(p=>`<div class="promoStrip"><div><span>${esc(p.badge||"🎁")}</span><b>${esc(p.title)}</b><small>${esc(p.subtitle||"")}</small></div><button onclick="openAccount()">দেখুন</button></div>`).join(""):'<div class="panel muted">No active promotions.</div>'}
 async function loadHomeContent(){try{const d=await api("/api/content/home");homeContent={banners:d.banners||[],promotions:d.promotions||[]};renderBanner();renderPromotions();restartBannerTimer()}catch{}}
-async function loadPayoutAccount(){
-  if(!me)return;
-  try{
-    const d=await api("/api/account/payout");
-    payoutAccounts=d.accounts||[];
-    payoutAccount=d.payout||{method:"",number:""};
-    if(!payoutAccounts.some(x=>Number(x.id)===Number(selectedPayoutAccountId))){
-      selectedPayoutAccountId=Number(payoutAccounts[0]?.id||0)
-    }
-    renderPayoutAccountSlots();
-    renderWithdrawAccounts()
-  }catch{}
-}
+async function loadPayoutAccount(){if(!me)return;try{const d=await api("/api/account/payout");payoutAccount=d.payout||{method:"",number:""}}catch{}}
 function renderGameSkeletons(){
   const el=$("gameGrid");if(!el)return;
   el.innerHTML=Array.from({length:8},()=>`<article class="gameCard gameSkeleton"><div class="skeletonBlock"></div><span></span><small></small></article>`).join("")
@@ -508,7 +496,7 @@ async function changePassword(){
   if(newPassword!==confirm)return toast("New passwords do not match");
   try{await withLoading("Security update","Password পরিবর্তন করা হচ্ছে...",async()=>{
     await api("/api/account/password",{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify({currentPassword,newPassword})})
-  });closeModal("securityModal");showActionResult("success","পাসওয়ার্ড আপডেট হয়েছে","নতুন পাসওয়ার্ড চালু হয়েছে। অন্য ডিভাইসের পুরনো সেশন বন্ধ করা হয়েছে।")}
+  });closeModal("securityModal");showActionResult("success","Password changed","আপনার password সফলভাবে পরিবর্তন হয়েছে।")}
   catch(e){showActionResult("error","Password change failed",e.message)}
 }
 function providerLabel(method){return method==="nagad"?"Nagad":"bKash"}
@@ -547,7 +535,7 @@ function openMoney(mode){
   $("moneyAmount").value=min||"";$("moneyNote").value="";$("paymentTxId").value="";
   $("moneyStep1").classList.remove("hidden");$("moneyStep2").classList.add("hidden");
   $("depositMethodArea").classList.toggle("hidden",!dep);$("withdrawAccountArea").classList.toggle("hidden",dep);$("bkashAvailability").classList.toggle("hidden",!dep);
-  if(!dep){renderWithdrawAccounts();}
+  if(!dep){const method=payoutAccount.method||"bkash";window.__withdrawMethod=method;document.querySelectorAll(".withdrawMethodBtn").forEach(x=>x.classList.remove("selected"));$(method==="nagad"?"withdrawNagadBtn":"withdrawBkashBtn")?.classList.add("selected");$("withdrawNumber").value=payoutAccount.number||"";}
   if(dep){
     renderPaymentMethods();
     const method=window.__moneyMethod||"bkash",p=paymentConfig[method]||{};
@@ -580,86 +568,17 @@ function copyPaymentNumber(){
   navigator.clipboard?.writeText(n).then(()=>toast(`${providerLabel(method)} number copied`)).catch(()=>toast(n))
 }
 
-function maskPayoutNumber(number){
-  const n=String(number||"");
-  return n.length===11?`${n.slice(0,3)}••••${n.slice(-4)}`:n
-}
-function payoutBrand(method){return method==="nagad"?"N":"b"}
-function renderPayoutAccountSlots(){
-  const box=$("payoutAccountSlots"),count=$("payoutSlotCount"),add=$("payoutAddBox"),btn=$("savePayoutAccountBtn");
-  if(count)count.textContent=`${payoutAccounts.length}/4`;
-  if(!box)return;
-
-  const slots=[];
-  for(let i=0;i<4;i++){
-    const a=payoutAccounts[i];
-    if(a){
-      slots.push(`<div class="lockedPayoutCard ${a.method}">
-        <div class="walletBrand ${a.method}">${payoutBrand(a.method)}</div>
-        <div><small>SLOT ${i+1} • LOCKED</small><b>${esc(providerLabel(a.method))}</b><strong>${esc(maskPayoutNumber(a.number))}</strong></div>
-        <span>🔒</span>
-      </div>`)
-    }else{
-      slots.push(`<div class="lockedPayoutCard empty"><div>＋</div><span>Slot ${i+1}</span><small>Available</small></div>`)
-    }
-  }
-  box.innerHTML=slots.join("");
-  const full=payoutAccounts.length>=4;
-  add?.classList.toggle("hidden",full);
-  if(btn)btn.disabled=full
-}
-function selectSavedPayoutAccount(id){
-  selectedPayoutAccountId=Number(id)||0;
-  document.querySelectorAll(".withdrawSavedCard").forEach(el=>el.classList.toggle("selected",Number(el.dataset.id)===selectedPayoutAccountId));
-  syncMoneyButton()
-}
-function renderWithdrawAccounts(){
-  const box=$("withdrawAccountList"),count=$("withdrawAccountCount");
-  if(count)count.textContent=`${payoutAccounts.length}/4`;
-  if(!box)return;
-  if(!payoutAccounts.length){
-    box.innerHTML=`<div class="noWithdrawAccount"><b>কোনো উত্তোলন কার্ড নেই</b><span>প্রথমে bKash/Nagad account যোগ করুন।</span></div>`;
-    selectedPayoutAccountId=0;syncMoneyButton();return
-  }
-  if(!payoutAccounts.some(a=>Number(a.id)===Number(selectedPayoutAccountId)))selectedPayoutAccountId=Number(payoutAccounts[0].id);
-  box.innerHTML=payoutAccounts.map(a=>`<button type="button" data-id="${a.id}" class="withdrawSavedCard ${Number(a.id)===Number(selectedPayoutAccountId)?'selected':''}" onclick="selectSavedPayoutAccount(${a.id})">
-    <span class="walletBrand ${a.method}">${payoutBrand(a.method)}</span>
-    <span><b>${esc(providerLabel(a.method))}</b><small>${esc(maskPayoutNumber(a.number))}</small></span>
-    <i>✓</i>
-  </button>`).join("")
-}
-function selectPayoutMethod(btn,method){
-  document.querySelectorAll(".payoutMethodBtn").forEach(x=>x.classList.remove("selected"));
-  btn?.classList.add("selected");window.__payoutMethod=method
-}
-async function openPayoutSettings(){
-  closeModal("accountModal");
-  window.__payoutMethod="bkash";
-  $("payoutNumber").value="";
-  document.querySelectorAll(".payoutMethodBtn").forEach(x=>x.classList.remove("selected"));
-  $("payoutBkashBtn")?.classList.add("selected");
-  await loadPayoutAccount();
-  renderPayoutAccountSlots();
-  openModal("payoutModal")
-}
+function selectWithdrawMethod(btn,method){document.querySelectorAll(".withdrawMethodBtn").forEach(x=>x.classList.remove("selected"));btn?.classList.add("selected");window.__withdrawMethod=method;syncMoneyButton()}
+function selectPayoutMethod(btn,method){document.querySelectorAll(".payoutMethodBtn").forEach(x=>x.classList.remove("selected"));btn?.classList.add("selected");window.__payoutMethod=method}
+function openPayoutSettings(){closeModal("accountModal");window.__payoutMethod=payoutAccount.method||"bkash";document.querySelectorAll(".payoutMethodBtn").forEach(x=>x.classList.remove("selected"));$(window.__payoutMethod==="nagad"?"payoutNagadBtn":"payoutBkashBtn")?.classList.add("selected");$("payoutNumber").value=payoutAccount.number||"";openModal("payoutModal")}
 async function savePayoutSettings(){
-  const method=window.__payoutMethod||"bkash",number=$("payoutNumber").value.replace(/\D/g,"");
-  if(payoutAccounts.length>=4)return showActionResult("error","৪টি কার্ড পূর্ণ","নতুন কার্ড যোগ করতে পারবেন না।");
-  if(!/^01\d{9}$/.test(number))return toast("সঠিক ১১ সংখ্যার নম্বর লিখুন");
-  try{
-    await withLoading("কার্ড সেভ হচ্ছে","অ্যাকাউন্টটি স্থায়ী slot-এ lock করা হচ্ছে...",async()=>{
-      const d=await api("/api/account/payout-accounts",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({method,number})});
-      payoutAccounts=d.accounts||payoutAccounts;
-      payoutAccount=payoutAccounts[0]?{method:payoutAccounts[0].method,number:payoutAccounts[0].number}:{method:"",number:""};
-      selectedPayoutAccountId=Number(d.account?.id||selectedPayoutAccountId||0)
-    });
-    $("payoutNumber").value="";
-    renderPayoutAccountSlots();
-    renderWithdrawAccounts();
-    showActionResult("success","কার্ড সেভ হয়েছে","এই নম্বর এখন locked। এটি পরিবর্তন বা ডিলিট করা যাবে না।")
-  }catch(e){showActionResult("error","কার্ড সেভ হয়নি",e.message)}
+  try{await withLoading("Account save হচ্ছে","bKash/Nagad account যাচাই করা হচ্ছে...",async()=>{
+    const method=window.__payoutMethod||"bkash",number=$("payoutNumber").value.replace(/\D/g,"");
+    const d=await api("/api/account/payout",{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify({method,number})});
+    payoutAccount=d.payout
+  });closeModal("payoutModal");showActionResult("success","Account saved","আপনার withdrawal account সংরক্ষণ হয়েছে।")}
+  catch(e){showActionResult("error","Save failed",e.message)}
 }
-
 async function submitMoney(){
   const amount=Number($("moneyAmount").value),note=$("moneyNote").value.trim();
   if(moneyMode==="deposit"&&moneyStep===1){
@@ -677,10 +596,10 @@ async function submitMoney(){
       body.paymentMethod=method;body.paymentRef=$("paymentTxId").value.trim().toUpperCase();
       if(!/^[A-Z0-9]{6,30}$/.test(body.paymentRef))return toast(`সঠিক ${providerLabel(method)} Transaction ID লিখুন`);
     }
-    else{if(!selectedPayoutAccountId)return toast("উত্তোলনের জন্য একটি সেভ করা কার্ড নির্বাচন করুন");body.payoutAccountId=selectedPayoutAccountId;}
+    else{body.payoutMethod=window.__withdrawMethod||payoutAccount.method||"";body.payoutNumber=$("withdrawNumber").value.replace(/\D/g,"");if(!["bkash","nagad"].includes(body.payoutMethod))return toast("bKash অথবা Nagad নির্বাচন করুন");if(!/^01\d{9}$/.test(body.payoutNumber))return toast("সঠিক ১১ সংখ্যার উত্তোলন নম্বর লিখুন");}
     const actionName=moneyMode==="deposit"?"Deposit request":"Withdrawal request";
     const d=await withLoading(`${actionName} পাঠানো হচ্ছে`,"অনুগ্রহ করে পেজ বন্ধ করবেন না...",()=>api(moneyMode==="deposit"?"/api/deposits":"/api/withdrawals",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)}));
-    if(d.wallet)setWallet(d.wallet);closeModal("moneyModal");moneyStep=1;
+    if(d.wallet)setWallet(d.wallet);if(d.payout)payoutAccount=d.payout;closeModal("moneyModal");moneyStep=1;
     await Promise.all([loadWallet(),loadTransactions(),loadPayments(),loadNotifications(),loadMemberSummary()]);
     showActionResult("success",`${actionName} গ্রহণ করা হয়েছে`,`${d.txId} • Status: ${d.status}`)
   }catch(e){toast(e.message)}
@@ -689,49 +608,9 @@ async function loadWallet(){if(!me)return;try{const d=await api("/api/wallet");s
 async function loadTransactions(){if(!me)return;try{const type=$("txFilter")?.value||"all",d=await api(`/api/transactions?type=${encodeURIComponent(type)}`);$("ledgerList").innerHTML=d.rows.length?d.rows.map(r=>`<div class="row"><b>${esc(r.type)}</b><span class="${r.amount>=0?'pos':'neg'}">${r.amount>0?'+':''}${r.amount}</span><span>Avail ${r.balance_after}<br><small class="muted">Held ${r.held_after}</small></span><span class="muted">${esc(r.ref_id||'')}<br>${new Date(r.created_at).toLocaleString()}</span></div>`).join(""):'<p class="muted">No transactions yet.</p>'}catch(e){toast(e.message)}}
 async function loadPayments(){if(!me)return;try{const d=await api("/api/payments"),rows=[...d.deposits.map(x=>({...x,kind:'Deposit'})),...d.withdrawals.map(x=>({...x,kind:'Withdrawal'}))].sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));$("paymentList").innerHTML=rows.length?rows.map(x=>`<div class="row"><b>${x.kind}<br><small>${esc(x.tx_id)}</small>${x.payment_method?`<br><small>${esc(x.payment_method)} • ${esc(x.payment_ref||'')}</small>`:''}${x.payout_method?`<br><small>${esc(x.payout_method)} • ${esc(x.payout_number||'')}</small>`:''}</b><span>${x.amount}</span><span class="status">${esc(x.status)}</span><span class="muted">${new Date(x.created_at).toLocaleString()}<br>${esc(x.admin_note||'')}</span></div>`).join(""):'<p class="muted">No requests yet.</p>'}catch(e){toast(e.message)}}
 async function loadBets(){if(!me)return;try{const d=await api("/api/bets");$("betList").innerHTML=d.rows.length?d.rows.map(r=>`<div class="row"><b>${esc(r.game_slug)}</b><span>Stake ${r.stake}</span><span class="${r.payout>0?'pos':'neg'}">Payout ${r.payout}</span><span class="muted">${esc(r.outcome)}<br>${new Date(r.created_at).toLocaleString()}</span></div>`).join(""):'<p class="muted">No bets yet.</p>'}catch(e){toast(e.message)}}
-let liveNoticeTimer=null;
-function hideLivePaymentNotice(){
-  clearTimeout(liveNoticeTimer);
-  $("livePaymentNotice")?.classList.remove("show")
-}
-function showLivePaymentNotice(n){
-  if(!n)return;
-  $("livePaymentTitle").textContent=n.title||"লেনদেন আপডেট";
-  $("livePaymentMessage").textContent=n.message||"";
-  $("livePaymentIcon").textContent=n.type==="warning"?"!":"✓";
-  const el=$("livePaymentNotice");el?.classList.add("show");
-  clearTimeout(liveNoticeTimer);
-  liveNoticeTimer=setTimeout(hideLivePaymentNotice,6500)
-}
-async function loadNotifications(live=false){
-  if(!me)return;
-  try{
-    const d=await api("/api/notifications");
-    $("unreadDot").classList.toggle("show",d.unread>0);
-    if($("unreadCount"))$("unreadCount").textContent=d.unread;
-    $("notificationList").innerHTML=d.rows.length?d.rows.map(n=>`<div class="notificationCard ${n.is_read?'read':'unread'}"><div class="notificationIcon">${n.type==='success'?'✓':n.type==='warning'?'!':'i'}</div><div><b>${esc(n.title)}</b><p>${esc(n.message)}</p><small>${new Date(n.created_at).toLocaleString()}</small></div><div class="notificationActions">${n.is_read?'':`<button onclick="readOneNotification(${n.id})">Read</button>`}<button onclick="deleteNotification(${n.id})">×</button></div></div>`).join(""):'<p class="muted">No notifications.</p>';
-
-    const newest=Number(d.rows[0]?.id||0);
-    if(live&&lastNotificationId){
-      const fresh=d.rows.filter(n=>Number(n.id)>lastNotificationId&&n.type==="success"&&/(ডিপোজিট|উত্তোলন|Deposit|Withdrawal)/i.test(n.title||""));
-      if(fresh.length){
-        showLivePaymentNotice(fresh[0]);
-        await Promise.all([loadWallet(),loadPayments(),loadMemberSummary()])
-      }
-    }
-    lastNotificationId=Math.max(lastNotificationId,newest)
-  }catch(e){if(!live)toast(e.message)}
-}
-function startNotificationPolling(){
-  clearInterval(notificationPollTimer);
-  if(!me)return;
-  notificationPollTimer=setInterval(()=>{if(me&&document.visibilityState!=="hidden")loadNotifications(true)},10000)
-}
-async function markRead(){if(!me)return;try{await api("/api/notifications/read",{method:"POST"});loadNotifications()}catch(e){toast(e.message)}}
-async function readOneNotification(id){try{await api(`/api/notifications/${id}/read`,{method:"POST"});loadNotifications()}catch(e){toast(e.message)}}
-async function deleteNotification(id){try{await api(`/api/notifications/${id}`,{method:"DELETE"});loadNotifications()}catch(e){toast(e.message)}}
+async function loadNotifications(){if(!me)return;try{const d=await api("/api/notifications");$("unreadDot").classList.toggle("show",d.unread>0);if($("unreadCount"))$("unreadCount").textContent=d.unread;$("notificationList").innerHTML=d.rows.length?d.rows.map(n=>`<div class="notificationCard ${n.is_read?'read':'unread'}"><div class="notificationIcon">${n.type==='success'?'✓':n.type==='warning'?'!':'i'}</div><div><b>${esc(n.title)}</b><p>${esc(n.message)}</p><small>${new Date(n.created_at).toLocaleString()}</small></div><div class="notificationActions">${n.is_read?'':`<button onclick="readOneNotification(${n.id})">Read</button>`}<button onclick="deleteNotification(${n.id})">×</button></div></div>`).join(""):'<p class="muted">No notifications.</p>'}catch(e){toast(e.message)}}async function markRead(){if(!me)return;try{await api("/api/notifications/read",{method:"POST"});loadNotifications()}catch(e){toast(e.message)}}async function readOneNotification(id){try{await api(`/api/notifications/${id}/read`,{method:"POST"});loadNotifications()}catch(e){toast(e.message)}}async function deleteNotification(id){try{await api(`/api/notifications/${id}`,{method:"DELETE"});loadNotifications()}catch(e){toast(e.message)}}
 async function sendSupport(){if(!me)return openAccount();try{await api("/api/support",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({subject:$("supportSubject").value,message:$("supportMessage").value})});$("supportSubject").value="";$("supportMessage").value="";toast("Support ticket created");loadTickets()}catch(e){toast(e.message)}}async function loadTickets(){if(!me)return;try{const d=await api("/api/support");$("ticketList").innerHTML=d.rows.length?d.rows.map(t=>`<div class="row"><b>#${t.id} ${esc(t.subject)}</b><span class="status">${esc(t.status)}</span><span></span><span class="muted">${new Date(t.created_at).toLocaleString()}</span></div>`).join(""):'<p class="muted">No support tickets.</p>'}catch(e){toast(e.message)}}
-async function refreshPrivate(){if(!me)return;await Promise.all([loadWallet(),loadTransactions(),loadPayments(),loadBets(),loadNotifications(false),loadTickets(),loadPayoutAccount(),loadMemberSummary()]);startNotificationPolling()}
+async function refreshPrivate(){if(!me)return;await Promise.all([loadWallet(),loadTransactions(),loadPayments(),loadBets(),loadNotifications(),loadTickets(),loadPayoutAccount(),loadMemberSummary()])}
 function esc(v){return String(v??"").replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
 
 $("brandBtn").addEventListener("click",()=>{const now=Date.now();logoTaps=logoTaps.filter(x=>now-x<2200);logoTaps.push(now);if(logoTaps.length>=5){logoTaps=[];adminEnter()}});
@@ -921,7 +800,7 @@ function setBottomActive(btn){document.querySelectorAll('.bottomNav button').for
 function filterLobby(category,btn){if(btn){document.querySelectorAll('.quickCats button').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}document.querySelectorAll('#gameGrid .gameCard').forEach((card,i)=>{const c=(card.dataset.category||'').toLowerCase();let show=category==='all'||(category==='popular'&&i<10)||c.includes(category);card.style.display=show?'flex':'none'})}
 function selectAmount(n){$('moneyAmount').value=n;document.querySelectorAll('.amountGrid button').forEach(b=>b.classList.toggle('active',Number(b.textContent.replace(/,/g,''))===Number(n)));syncMoneyButton()}
 function selectMethod(btn,name){document.querySelectorAll('.methodGrid button').forEach(b=>b.classList.remove('selected'));btn?.classList.add('selected');window.__moneyMethod=name}
-function syncMoneyButton(){const b=$('moneySubmit'),a=Number($('moneyAmount')?.value||0);if(!b)return;let ready=a>0;if(moneyMode==='deposit'&&moneyStep===2)ready=ready&&/^[A-Za-z0-9]{6,30}$/.test($('paymentTxId')?.value.trim()||'');if(moneyMode==='withdraw')ready=ready&&Boolean(selectedPayoutAccountId);b.classList.toggle('ready',ready)}
+function syncMoneyButton(){const b=$('moneySubmit'),a=Number($('moneyAmount')?.value||0);if(!b)return;let ready=a>0;if(moneyMode==='deposit'&&moneyStep===2)ready=ready&&/^[A-Za-z0-9]{6,30}$/.test($('paymentTxId')?.value.trim()||'');if(moneyMode==='withdraw')ready=ready&&/^01\d{9}$/.test($('withdrawNumber')?.value.trim()||'');b.classList.toggle('ready',ready)}
 $('moneyAmount')?.addEventListener('input',syncMoneyButton);
 function accountAction(action){
   if(!me)return openAccount();
