@@ -1,0 +1,12 @@
+{
+  "id": "skyrush-site-wallet",
+  "name": "SkyRush Site Wallet Edition",
+  "version": "4.0.0",
+  "type": "game",
+  "entry": "./public/index.html",
+  "icon": "./public/icon.svg",
+  "walletMode": "host-only",
+  "hostAdapter": "./public/skyrush-host-wallet.js",
+  "localBalance": false,
+  "walletRequired": true
+}

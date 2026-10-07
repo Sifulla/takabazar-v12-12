@@ -1,0 +1,9 @@
+{
+  "id": "skyrush-control",
+  "name": "SkyRush Control Edition",
+  "version": "1.0.0",
+  "type": "game",
+  "entry": "./public/index.html",
+  "icon": "./public/icon.svg",
+  "walletMode": "local"
+}

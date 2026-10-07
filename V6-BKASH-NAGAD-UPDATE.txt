@@ -1,0 +1,31 @@
+TakaBazar V6 — bKash + Nagad
+
+Added:
+- bKash and Nagad on the Deposit screen
+- Independent Admin number + Enabled/Disabled status for both
+- User chooses a payment method before deposit
+- Selected Send Money number is shown with Copy button
+- User submits the selected provider's Transaction ID
+- Duplicate Transaction ID is blocked per payment method
+- Admin sees payment method, number, and Transaction ID on each request
+- Fixed the V5 "Admin request failed (404)" Save Payment Settings bug
+
+Important:
+This is manual payment verification. No automatic bKash/Nagad gateway/API is connected.
+
+Termux:
+1) CTRL+C to stop current server
+2) Download takabazar-v6-bkash-nagad.zip
+3) Run:
+   cd ~
+   rm -rf takabazar-v6
+   unzip -o ~/storage/downloads/takabazar-v6-bkash-nagad.zip -d ~/takabazar-v6
+   mkdir -p ~/takabazar-v6/data
+   cp ~/takabazar-v5/data/takabazar.sqlite* ~/takabazar-v6/data/ 2>/dev/null || cp ~/takabazar-v4/data/takabazar.sqlite* ~/takabazar-v6/data/ 2>/dev/null || true
+   cd ~/takabazar-v6
+   npm install
+   npm start
+
+Admin:
+TakaBazar name -> tap 5 times -> Wallet Requests
+Set bKash and Nagad numbers -> Enabled -> Save bKash & Nagad

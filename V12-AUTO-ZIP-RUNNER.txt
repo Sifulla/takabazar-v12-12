@@ -1,0 +1,25 @@
+TakaBazar V12 — Auto ZIP Game Runner
+
+What changed:
+- Admin gives only a ZIP; game.json is optional.
+- Finds index.html automatically, including inside one/more nested folders.
+- If game.json exists anywhere, it uses it.
+- README/TXT/MD and harmless unknown files are ignored instead of failing install.
+- Unsafe executable/server files are blocked.
+- TakaBazar Wallet SDK + compatibility aliases are injected into the game HTML.
+- Auto engine detection: crash / dice / coin / wheel; unknown games run as standalone.
+- Auto validation + Auto Publish. No Test/Publish step is required for normal ZIP upload.
+- Existing Test button still works for crash and standalone packages.
+- Existing V11 crash session API and central wallet are kept.
+
+Important:
+- Any normal client-side HTML/CSS/JS ZIP can be launched automatically.
+- Central wallet is automatic for games that use the TakaBazar SDK/bridge or a supported server engine.
+- An arbitrary third-party game with completely unknown private wallet/bet code cannot be safely rewritten automatically; it will still run sandboxed, but its internal fake balance is not treated as the TakaBazar wallet.
+
+Termux update:
+CTRL+C
+cd ~ && rm -rf takabazar-v12 && unzip -o ~/storage/downloads/takabazar-v12-auto-zip-runner.zip -d ~/takabazar-v12 && mkdir -p ~/takabazar-v12/data && (cp ~/takabazar-v11/data/takabazar.sqlite* ~/takabazar-v12/data/ 2>/dev/null || cp ~/takabazar-v10/data/takabazar.sqlite* ~/takabazar-v12/data/ 2>/dev/null || true) && cd ~/takabazar-v12 && npm install && npm start
+
+Open http://localhost:3000
+Then Admin -> Game Manager -> Choose Game ZIP.

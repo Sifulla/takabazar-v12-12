@@ -1,0 +1,32 @@
+TakaBazar V12.10 — Demo Admin Control
+
+Everything visible remains based on V12.8. No new game toolbar, ON/OFF panel, or replacement admin UI is added.
+
+Only functional changes:
+1. Game balance:
+   - Uses TakaBazar central user/demo balance.
+   - Shows inside the game's own balance UI/style.
+   - No extra TakaBazar floating balance chip is shown over the game.
+
+2. Game Admin:
+   - TakaBazar Admin -> Game Manager -> Open Admin still opens the game's existing native admin/control panel.
+   - The game's UI/settings/buttons are not recreated or redesigned.
+   - The internal game PIN is bypassed only through the already-authenticated TakaBazar Admin launch.
+
+3. SkyRush demo Force Crash:
+   - The EXISTING Force Crash button in the game's own admin panel is retained.
+   - When the game is opened from authenticated TakaBazar Admin, that button controls the server-authoritative demo crash round.
+   - It requires BOTH the TakaBazar Admin session and the currently logged-in user's session.
+   - It can only control that logged-in user's current crash round.
+   - It is demo-only. Set TAKABAZAR_DEMO_ADMIN_CONTROLS=0 before any real-money/live use.
+
+4. Other native game admin features:
+   - They remain exactly as supplied by that game's ZIP.
+   - TakaBazar does not rewrite or invent missing controls.
+
+Data:
+- Existing users, balances, deposits, withdrawals, games and records are preserved by copying the existing data folder.
+
+Use:
+TakaBazar logo 5 taps -> Admin -> Game Manager -> SkyRush -> Open Admin
+Then use the game's original admin panel. During a FLY round, its existing FORCE CRASH button works in demo mode.

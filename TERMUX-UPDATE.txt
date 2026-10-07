@@ -1,0 +1,18 @@
+TAKABAZAR V2 — TERMUX UPDATE
+
+1) Stop old server with Ctrl+C.
+2) Extract takabazar-credits-platform-v2.zip inside Downloads.
+3) Open the new folder:
+   cd ~/storage/downloads/takabazar-credits-platform-v2
+4) Optional: preserve old database:
+   mkdir -p data
+   cp ../takabazar-demo-casino/data/takabazar.sqlite data/takabazar.sqlite 2>/dev/null || true
+5) Install packages:
+   npm install
+6) Start:
+   npm start
+7) Open Chrome:
+   http://localhost:3000
+
+Admin: tap TakaBazar logo 5 times.
+Default PIN: 64686123

@@ -1,0 +1,25 @@
+TakaBazar V8
+
+New Member / My Account UI:
+- Premium profile + initials avatar
+- VIP level and invite code
+- Available and held balance
+- Deposit / Withdraw / My Card shortcuts
+- Bets / wagered / deposits / withdrawals stats
+- Deposit, withdrawal, bet and wallet record shortcuts
+- VIP panel
+- Invite code copy
+- Messages unread counter
+- Promotion shortcut
+- Customer Service + open ticket counter
+- Security Center with password change
+- Logout confirmation
+- Startup splash screen
+- Bottom Member button opens My Account
+- Fixes V7 home-content JS scoping
+
+Termux:
+CTRL+C
+cd ~ && rm -rf takabazar-v8 && unzip -o ~/storage/downloads/takabazar-v8-member-dashboard.zip -d ~/takabazar-v8 && mkdir -p ~/takabazar-v8/data && (cp ~/takabazar-v7/data/takabazar.sqlite* ~/takabazar-v8/data/ 2>/dev/null || cp ~/takabazar-v6/data/takabazar.sqlite* ~/takabazar-v8/data/ 2>/dev/null || true) && cd ~/takabazar-v8 && npm install && npm start
+
+Open http://localhost:3000

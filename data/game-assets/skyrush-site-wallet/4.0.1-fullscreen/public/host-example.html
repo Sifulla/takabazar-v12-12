@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="bn">
+<head><script src="/sdk/takabazar-game-sdk.js"></script><script src="/sdk/takabazar-auto-bridge.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>SkyRush Fullscreen Site Wallet Test</title>
+<style>
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  background:#05080d;
+  overflow:hidden;
+  font-family:Arial,sans-serif;
+}
+#skyrushGame{
+  display:block;
+  width:100vw;
+  height:100vh;
+  border:0;
+  background:#05080d;
+}
+</style>
+</head>
+<body>
+
+<iframe id="skyrushGame" src="./index.html" allow="fullscreen"></iframe>
+
+<script src="./skyrush-host-wallet.js"></script>
+<script>
+// Host site balance simulation for testing.
+// It is intentionally NOT shown on the screen.
+let siteBalance = 1000;
+
+SkyRushHostWallet.mount({
+  iframeId: "skyrushGame",
+  currency: "BDT",
+
+  getBalance: async () => siteBalance,
+
+  debit: async (amount, meta) => {
+    if (amount <= 0 || siteBalance < amount) {
+      return { success:false, balance:siteBalance, error:"insufficient_balance" };
+    }
+    siteBalance = Math.round((siteBalance - amount) * 100) / 100;
+    return { success:true, balance:siteBalance };
+  },
+
+  credit: async (amount, meta) => {
+    siteBalance = Math.round((siteBalance + amount) * 100) / 100;
+    return { success:true, balance:siteBalance };
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="bn">
+<head><script src="/sdk/takabazar-game-sdk.js"></script><script src="/sdk/takabazar-auto-bridge.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SkyRush + TakaBazar Balance Test</title>
+<style>
+html,body{margin:0;width:100%;height:100%;background:#081018;overflow:hidden}
+#skyrushGame{width:100%;height:100%;display:block;border:0}
+</style>
+</head>
+<body>
+
+<iframe id="skyrushGame" src="./index.html"></iframe>
+
+<script>
+// Simulated TakaBazar wallet for integration testing.
+// Notice: no extra balance is rendered outside the game.
+let takaBazarBalance=1014;
+
+window.TakaBazarWallet={
+  currency:"BDT",
+
+  async getBalance(){
+    return takaBazarBalance;
+  },
+
+  async debit(amount,meta){
+    if(amount<=0 || takaBazarBalance<amount){
+      return {
+        success:false,
+        balance:takaBazarBalance,
+        error:"insufficient_balance"
+      };
+    }
+    takaBazarBalance=Math.round((takaBazarBalance-amount)*100)/100;
+    return {success:true,balance:takaBazarBalance};
+  },
+
+  async credit(amount,meta){
+    takaBazarBalance=Math.round((takaBazarBalance+amount)*100)/100;
+    return {success:true,balance:takaBazarBalance};
+  }
+};
+</script>
+
+<script src="./takabazar-wallet-bridge.js"></script>
+<script>
+connectSkyRushToTakaBazar({iframeId:"skyrushGame"});
+</script>
+</body>
+</html>

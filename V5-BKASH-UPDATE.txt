@@ -1,0 +1,26 @@
+TakaBazar V5 — bKash Deposit Update
+
+What changed:
+- User Deposit page has bKash Send Money flow.
+- Admin -> Wallet Requests can set/change the bKash number.
+- Admin can enable/disable bKash deposits.
+- User copies the bKash number, sends money manually, enters Transaction ID, then submits.
+- Duplicate Transaction ID is blocked.
+- Deposit remains Pending until Admin approves/rejects it.
+- The bKash number used at submission is saved with the request for audit/history.
+- No automatic bKash API/payment gateway is connected.
+
+Termux update:
+1. Stop the current server with CTRL+C.
+2. cd ~/storage/downloads
+3. unzip -o takabazar-v5-bkash-deposit.zip -d ~/takabazar-v5
+4. mkdir -p ~/takabazar-v5/data
+5. cp ~/takabazar-v4/data/takabazar.sqlite* ~/takabazar-v5/data/ 2>/dev/null || true
+6. cd ~/takabazar-v5
+7. npm install
+8. npm start
+9. Open http://localhost:3000
+
+After launch:
+- Tap TakaBazar 5 times -> Admin PIN -> Wallet Requests
+- Set bKash Number -> Enabled -> Save bKash

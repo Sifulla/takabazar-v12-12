@@ -1,0 +1,18 @@
+TakaBazar V3 — Second Video Reference UI
+
+This version follows only the SECOND user-supplied screen recording for layout inspiration.
+It does NOT copy the source site's logo, brand name, artwork, or proprietary assets.
+
+Updated frontend:
+- teal mobile lobby header
+- login/register screen
+- compact category row
+- 5-column game lobby cards
+- floating support shortcuts
+- fixed bottom navigation
+- full account dashboard with balance and action grid
+- full-screen deposit/withdraw request UI with amount chips
+- existing V2 wallet, credits requests, notifications and admin Game Manager retained
+
+Important:
+The wallet request system remains credits-only and does not process real-money payments.

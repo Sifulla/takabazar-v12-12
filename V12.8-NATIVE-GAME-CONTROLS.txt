@@ -1,0 +1,33 @@
+TakaBazar V12.8 — Native Game Controls
+
+Main rule:
+TakaBazar does NOT rewrite a game's own Admin UI, settings, control panel, round logic, or other native features.
+
+What stays the same:
+- V12.4-style site and game viewer
+- Central wallet bridge
+- Fullscreen game
+- Premium balance UI
+- ZIP auto installer
+- Existing games and their own UI/features
+- Existing database and user balances
+
+Game Admin behavior:
+- TakaBazar Admin -> Game Manager -> Open Admin
+- TakaBazar Admin authentication is the outer permission gate.
+- The original game is loaded unchanged.
+- TakaBazar searches only for the game's own existing admin/control hooks.
+- Supported native hook names include:
+  openAdminPanel, showAdminPanel, openGameAdmin, showGameAdmin,
+  adminOpen, openControlPanel, showControlPanel, openControls, showControls.
+- TakaBazar then opens the game's original panel. It does not recreate its settings.
+- If a game has no compatible hook, the original game is left open unchanged.
+- Future games can listen to:
+  CustomEvent "takabazar:admin"
+  or postMessage source "TAKABAZAR_ADMIN", type "OPEN_NATIVE_ADMIN".
+
+Important:
+A random ZIP cannot be guaranteed to expose every private/admin feature automatically if that game does not contain those features or does not expose a callable admin hook. TakaBazar will not invent or silently alter missing game controls.
+
+Update:
+Use the data-preserving Termux command from the chat.

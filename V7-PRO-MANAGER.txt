@@ -1,0 +1,15 @@
+V7 adds:
+- saved bKash/Nagad withdrawal account
+- payout details in withdrawal requests
+- Banner Manager
+- Promotion Manager
+- Game Manager fields: category, badge, featured, sort, thumbnail, description
+- Notification Center + Admin broadcast
+- keeps bKash/Nagad deposits, wallet, ZIP game installer, Test/Publish, rollback, support, audit
+- fixes fresh database migration issue
+
+Termux:
+CTRL+C
+cd ~ && rm -rf takabazar-v7 && unzip -o ~/storage/downloads/takabazar-v7-pro-manager.zip -d ~/takabazar-v7 && mkdir -p ~/takabazar-v7/data && (cp ~/takabazar-v6/data/takabazar.sqlite* ~/takabazar-v7/data/ 2>/dev/null || cp ~/takabazar-v5/data/takabazar.sqlite* ~/takabazar-v7/data/ 2>/dev/null || cp ~/takabazar-v4/data/takabazar.sqlite* ~/takabazar-v7/data/ 2>/dev/null || true) && cd ~/takabazar-v7 && npm install && npm start
+
+Open http://localhost:3000

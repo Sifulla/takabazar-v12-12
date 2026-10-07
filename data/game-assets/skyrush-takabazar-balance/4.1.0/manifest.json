@@ -1,0 +1,13 @@
+{
+  "id": "skyrush-takabazar-balance",
+  "name": "SkyRush — TakaBazar Balance Sync",
+  "version": "4.1.0",
+  "type": "game",
+  "entry": "./public/index.html",
+  "icon": "./public/icon.svg",
+  "walletMode": "takabazar-host-only",
+  "hostAdapter": "./public/skyrush-host-wallet.js",
+  "localBalance": false,
+  "walletRequired": true,
+  "displayBalance": "takabazar"
+}

@@ -1,0 +1,19 @@
+TakaBazar V10
+- Universal Admin ZIP installer
+- HTML/CSS/JS game UI packages
+- Automatic Wallet SDK injection
+- Sandboxed iframe game runtime
+- Same central wallet for all SDK games
+- Server-authoritative bet and payout
+- New generic 'pick' engine
+- Existing coin/dice/wheel engines kept
+- Test -> Publish workflow kept
+- 15 MB ZIP upload limit
+- Unsafe paths / unsupported files blocked
+- Game HTML external network access blocked
+
+Termux:
+CTRL+C
+cd ~ && rm -rf takabazar-v10 && unzip -o ~/storage/downloads/takabazar-v10-universal-game-sdk.zip -d ~/takabazar-v10 && mkdir -p ~/takabazar-v10/data && (cp ~/takabazar-v9/data/takabazar.sqlite* ~/takabazar-v10/data/ 2>/dev/null || cp ~/takabazar-v8/data/takabazar.sqlite* ~/takabazar-v10/data/ 2>/dev/null || true) && cd ~/takabazar-v10 && npm install && npm start
+
+Open http://localhost:3000

@@ -1,0 +1,16 @@
+TakaBazar V3 — Termux update
+
+1) Stop the current server with Ctrl+C.
+2) Keep your current database backup before replacing files.
+3) Extract this V3 ZIP in Downloads.
+4) If migrating from V2, copy your data/takabazar.sqlite* files into the V3 data/ folder.
+5) Enter the V3 folder:
+   cd ~/storage/downloads/takabazar-v3-second-video-ui
+6) Install dependencies:
+   npm install
+7) Start:
+   npm start
+8) Open in Chrome:
+   http://localhost:3000
+
+Admin access remains: tap the TakaBazar brand 5 times quickly, then use your ADMIN_PIN.

@@ -1,0 +1,20 @@
+TakaBazar V12.4 — Balance Sync Fix
+
+What changed:
+- Fullscreen games now always show a compact premium TakaBazar Balance pill.
+- The old yellow outer balance is NOT restored.
+- Balance pill is teal/glass style and refreshable.
+- It updates through the central TakaBazar wallet after bet/cancel/cashout.
+- On server startup, every already-installed game HTML file is scanned.
+- Old game HTML is automatically repaired to load the current TakaBazar Game SDK + Auto Bridge.
+- This means previously installed SkyRush does not need to be re-uploaded.
+- Game HTML uses no-store caching, preventing an old cached copy from hiding the fix.
+- Existing users, wallet balances, deposits, withdrawals, and installed games remain unchanged.
+
+Update from V12.3:
+CTRL+C
+cd ~ && rm -rf takabazar-v12-4 && unzip -o ~/storage/downloads/takabazar-v12-4-balance-sync-fix.zip -d ~/takabazar-v12-4 && rm -rf ~/takabazar-v12-4/data && cp -a ~/takabazar-v12-3/data ~/takabazar-v12-4/data && cd ~/takabazar-v12-4 && npm install && npm start
+
+Then reopen:
+http://localhost:3000
+If Chrome still has the old page open, close that tab and open localhost:3000 again.

@@ -1,0 +1,15 @@
+TakaBazar V12.7 — Direct Game Admin
+
+This version is based on V12.4, so the extra V12.5/V12.6 Game Admin ON/OFF toolbars are removed.
+
+Only change:
+- TakaBazar Admin -> Game Manager has one "Open Admin" button per game.
+- TakaBazar Admin login is the authentication gate.
+- After successful TakaBazar Admin authentication, Open Admin loads the original game unchanged.
+- If the game exposes its existing internal admin function (e.g. SkyRush openAdminPanel), TakaBazar opens that existing panel directly without the game's second PIN screen.
+- The game's original admin controls/settings/round behavior are not rewritten.
+- Normal users opening the game do NOT receive this trusted admin event.
+- Games without a compatible internal admin hook cannot be forced open without modifying that specific game.
+
+Update:
+Use the data-preserving Termux command provided in chat.

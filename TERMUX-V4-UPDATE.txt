@@ -1,0 +1,12 @@
+TakaBazar V4 Termux Update
+
+1) Stop server: CTRL+C
+2) cd ~/storage/downloads
+3) mv takabazar-v3-second-video-ui takabazar-v3-second-video-ui-backup
+4) unzip takabazar-v4-easy-game-manager.zip
+5) mkdir -p takabazar-v4-easy-game-manager/data
+6) cp takabazar-v3-second-video-ui-backup/data/takabazar.sqlite* takabazar-v4-easy-game-manager/data/ 2>/dev/null || true
+7) cd takabazar-v4-easy-game-manager
+8) npm install
+9) npm start
+10) Open http://localhost:3000

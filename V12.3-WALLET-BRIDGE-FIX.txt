@@ -1,0 +1,17 @@
+TakaBazar V12.3 — Imported Game Wallet Bridge Fix
+
+Fixes:
+- Imported SkyRush/Site Wallet editions now receive the logged-in TakaBazar balance.
+- Adds SkyRushWallet compatibility automatically from the platform SDK.
+- If the imported game has no visible balance field, a small glass balance chip is shown inside the game itself.
+- Balance updates immediately after server wallet events.
+- SkyRush bet/cancel/cashout messages are supported as a compatibility fallback.
+- Crash bet and cashout settlement stay server-authoritative.
+- Client-supplied payout amounts are ignored.
+- Existing fullscreen mode remains.
+- Existing users, balance, deposits, withdrawals and installed game files remain unchanged.
+- No game ZIP re-upload is required for already installed games that load /sdk/takabazar-auto-bridge.js.
+
+Update:
+CTRL+C
+cd ~ && rm -rf takabazar-v12-3 && unzip -o ~/storage/downloads/takabazar-v12-3-wallet-bridge-fix.zip -d ~/takabazar-v12-3 && rm -rf ~/takabazar-v12-3/data && cp -a ~/takabazar-v12-2/data ~/takabazar-v12-3/data && cd ~/takabazar-v12-3 && npm install && npm start

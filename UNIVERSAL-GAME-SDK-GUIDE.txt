@@ -1,0 +1,72 @@
+TakaBazar V10 — Universal Game ZIP Format
+
+ADMIN FLOW
+1. Admin -> Game Manager
+2. Choose Game ZIP
+3. Install
+4. Run Test
+5. Publish
+6. Game appears automatically in Home and uses the same TakaBazar wallet.
+
+ZIP STRUCTURE
+my-game.zip
+├── game.json
+├── index.html
+├── game.js
+├── style.css
+└── assets/
+    └── thumbnail.webp
+
+game.json EXAMPLE
+{
+  "slug": "lucky-colors-ui",
+  "name": "Lucky Colors",
+  "version": "1.0.0",
+  "category": "popular",
+  "engine": "pick",
+  "icon": "🎨",
+  "thumbnail": "assets/thumbnail.webp",
+  "description": "A universal SDK color game",
+  "minBet": 10,
+  "maxBet": 500,
+  "ui": {
+    "entry": "index.html",
+    "bridgeVersion": 1
+  },
+  "config": {
+    "choices": [
+      {"key":"red","label":"Red","weight":5,"payout":2},
+      {"key":"blue","label":"Blue","weight":5,"payout":2},
+      {"key":"gold","label":"Gold","weight":2,"payout":4}
+    ]
+  }
+}
+
+GAME SDK
+The installer automatically injects:
+<script src="/sdk/takabazar-game-sdk.js"></script>
+
+Useful calls:
+await TakaBazarGame.ready()
+await TakaBazarGame.getBalance()
+await TakaBazarGame.bet({ stake: 50, guess: "red" })
+await TakaBazarGame.close()
+TakaBazarGame.on("balance", wallet => { ... })
+
+SECURITY MODEL
+- The game iframe cannot directly edit the main site's wallet.
+- The game only sends requests through postMessage.
+- Bet result and payout are calculated by the TakaBazar server.
+- A game cannot send an arbitrary payout amount.
+- Universal iframe runs sandboxed without same-origin access.
+- External network access from installed game HTML is blocked by CSP.
+
+SUPPORTED SERVER ENGINES
+- coin
+- dice
+- wheel
+- pick
+
+IMPORTANT
+A normal HTML/CSS/JS game can be installed from Admin if it uses one of the supported server engines and the SDK.
+Stateful crash/cash-out/live multiplayer games need a dedicated server engine before they can use the same wallet safely.

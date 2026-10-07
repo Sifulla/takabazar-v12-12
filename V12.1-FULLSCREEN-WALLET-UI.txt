@@ -1,0 +1,14 @@
+TakaBazar V12.1
+
+Changes:
+- Universal/auto games open edge-to-edge in the browser viewport
+- Removed TakaBazar outer game title/balance strip from game viewer
+- Removed outer game border and safety footer from the visible viewer
+- Small floating close button only
+- Game iframe uses 100vw x 100dvh
+- Premium main-site wallet balance chip
+- Improved wallet/member balance cards
+- Central wallet/server behavior is unchanged
+
+IMPORTANT UPDATE NOTE:
+Copy the ENTIRE old data folder, not only the SQLite file. The data folder contains installed game assets.

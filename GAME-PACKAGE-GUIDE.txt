@@ -1,0 +1,46 @@
+TakaBazar V4 — Easy Game Package
+
+Admin flow:
+1. Admin -> Game Manager
+2. Choose Game ZIP
+3. Install (automatically goes to Test Mode)
+4. Run Test
+5. After TEST PASSED, tap Publish
+6. The game automatically appears on the Home game grid
+
+ZIP requirements:
+- game.json at ZIP root
+- Optional image files under assets/
+- Allowed image types: png, jpg, jpeg, webp, gif
+- No JavaScript/HTML/executable files
+- Max ZIP: 6 MB
+
+Supported engines:
+- coin
+- dice
+- wheel
+
+Example wheel manifest:
+{
+  "slug": "lucky-colors",
+  "name": "Lucky Colors",
+  "version": "1.0.0",
+  "category": "popular",
+  "engine": "wheel",
+  "icon": "🎡",
+  "thumbnail": "",
+  "description": "Pick a color and spin.",
+  "minBet": 10,
+  "maxBet": 500,
+  "config": {
+    "choices": [
+      {"key":"red","label":"Red","weight":5,"payout":2},
+      {"key":"blue","label":"Blue","weight":5,"payout":2},
+      {"key":"gold","label":"Gold","weight":2,"payout":4}
+    ]
+  }
+}
+
+To add a thumbnail:
+- Put assets/thumb.webp in the ZIP
+- Set "thumbnail": "assets/thumb.webp"

@@ -1,0 +1,14 @@
+TakaBazar V11 Crash SDK
+
+Added:
+- server-authoritative crash rounds
+- crash bet / cancel / status / cashout SDK calls
+- same TakaBazar central credit wallet
+- crash payout validated by server time + hidden crash point
+- client game cannot choose payout or crash point
+- central-wallet Force Crash is NOT exposed
+- previous V10 universal ZIP installer remains
+
+Termux:
+CTRL+C
+cd ~ && rm -rf takabazar-v11 && unzip -o ~/storage/downloads/takabazar-v11-crash-sdk.zip -d ~/takabazar-v11 && mkdir -p ~/takabazar-v11/data && (cp ~/takabazar-v10/data/takabazar.sqlite* ~/takabazar-v11/data/ 2>/dev/null || cp ~/takabazar-v9/data/takabazar.sqlite* ~/takabazar-v11/data/ 2>/dev/null || true) && cd ~/takabazar-v11 && npm install && npm start

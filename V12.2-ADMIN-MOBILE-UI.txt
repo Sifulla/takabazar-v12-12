@@ -1,0 +1,17 @@
+TakaBazar V12.2 — Admin Game Manager Mobile UI
+
+Changes:
+- Each installed game is now a separate premium full-width card.
+- Long game names and slugs are safely truncated instead of breaking the layout.
+- Path-like/broken icon text such as public/... is replaced with a safe game icon.
+- Thumbnail/icon has a fixed mobile-friendly size.
+- Name, Category, Badge, Sort, Min/Max fields use a clean two-column layout.
+- Thumbnail and Description use full width.
+- Plays/Wagered/Payout/Players are shown in a compact stats row.
+- Save / Test / Publish / Maintenance / Rollback / Delete use a clean button grid.
+- Published/Test badges are easier to read.
+- Existing users, balances, installed games, wallet and game files remain unchanged.
+
+Update:
+CTRL+C
+cd ~ && rm -rf takabazar-v12-2 && unzip -o ~/storage/downloads/takabazar-v12-2-admin-mobile-ui.zip -d ~/takabazar-v12-2 && rm -rf ~/takabazar-v12-2/data && cp -a ~/takabazar-v12-1/data ~/takabazar-v12-2/data && cd ~/takabazar-v12-2 && npm install && npm start

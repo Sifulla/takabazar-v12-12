@@ -1,0 +1,446 @@
+:root{--teal:#087e79;--teal2:#04605e;--deep:#071f25;--deep2:#092a2f;--ink:#15192a;--card:#21263b;--card2:#2a3048;--purple:#6946e8;--pink:#e33d62;--blue:#5c7dff;--gold:#ffd65b;--white:#fff;--text:#f8fbff;--muted:#9ca7b4;--line:rgba(255,255,255,.09);--shadow:0 16px 42px rgba(0,0,0,.24)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:linear-gradient(180deg,#087875 0,#064e50 54%,#062f35 100%);color:#fff;font-family:Inter,system-ui,-apple-system,"Noto Sans Bengali",Arial,sans-serif;min-height:100vh;padding-bottom:75px}button,input,textarea,select{font:inherit}button{cursor:pointer}.hidden{display:none!important}.muted{color:var(--muted)}
+.appHeader{position:sticky;top:0;z-index:40;height:64px;padding:0 13px;display:flex;align-items:center;gap:10px;background:rgba(3,105,103,.94);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.08)}.menuBtn{border:0;background:none;color:#fff;font-size:25px;padding:4px}.brand{border:0;background:none;padding:0;color:#fff;font-size:24px;font-weight:1000;letter-spacing:-1px;margin-right:auto}.brandT{color:#fff}.brandB{color:#51f0d8}.headerAuth{display:flex;gap:7px}.loginMini,.registerMini{border:0;color:#fff;border-radius:6px;padding:9px 13px;font-size:11px;font-weight:900}.loginMini{background:#6146dc}.registerMini{background:#e83c61}.headerWallet{display:flex;align-items:center;gap:7px}.walletHead,.profileHead{border:1px solid rgba(255,255,255,.11);background:#055a5d;color:#fff;border-radius:9px;height:37px}.walletHead{display:flex;gap:6px;align-items:center;padding:0 9px}.walletHead b{font-size:12px;color:#ffe57f}.profileHead{width:38px}
+.homeShell{width:min(560px,100%);margin:auto}.promoHero{margin:8px 10px 7px;border-radius:9px;min-height:162px;position:relative;overflow:hidden;background:radial-gradient(circle at 82% 28%,#ffd75b55,transparent 28%),linear-gradient(125deg,#0f796e,#063d49 55%,#102f45);border:1px solid rgba(255,255,255,.08);box-shadow:var(--shadow);display:flex;align-items:center}.promoHero:before{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 50%,rgba(255,255,255,.04))}.promoCopy{position:relative;z-index:2;padding:17px;width:66%}.promoBadge{font-size:11px;font-weight:1000;color:#aefef0;letter-spacing:1px}.promoHero h1{margin:5px 0 4px;font-size:19px;line-height:1.28}.promoHero h1 strong{color:#ffe45e}.promoHero p{font-size:9px;color:#d9f3ef;margin:7px 0 12px}.promoHero button{border:0;background:linear-gradient(90deg,#ffdf56,#ff9e30);color:#18232c;border-radius:999px;padding:7px 14px;font-weight:950;font-size:10px}.promoArt{position:absolute;right:10px;top:15px;width:125px;height:130px}.jackpot{position:absolute;right:7px;top:26px;width:86px;height:86px;border-radius:50%;display:grid;place-items:center;text-align:center;background:radial-gradient(circle,#ffdf6e 0,#f0634f 34%,#7a3bd4 68%,#2b1c56);border:5px solid #ffd85a;box-shadow:0 0 0 5px #7b4fe0,0 12px 25px #0005;font-weight:1000;font-size:24px}.jackpot small{display:block;font-size:9px}.coin{position:absolute;color:#ffd660;text-shadow:0 2px 6px #000;font-size:22px}.c1{top:3px;left:7px}.c2{bottom:7px;left:15px}.c3{right:0;bottom:13px}.ticker{margin:0 10px 9px;background:#10282d;border-radius:8px;min-height:33px;padding:7px 9px;display:flex;align-items:center;gap:7px;font-size:9px;color:#d9e5e5;white-space:nowrap;overflow:hidden}.ticker div{overflow:hidden;text-overflow:ellipsis}.ticker b{color:#fff}
+.quickCats{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;padding:0 10px 9px}.quickCats button{min-width:0;height:70px;border:1px solid rgba(255,255,255,.08);border-radius:8px;background:#132a32;color:#c5d1d2;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px}.quickCats button i{font-style:normal;font-size:21px;color:#d967ff}.quickCats button span{font-size:9px;font-weight:800}.quickCats button.active{background:linear-gradient(145deg,#7c46e8,#4a55f4);color:#fff}.quickCats button.active i{color:#fff}
+.section{padding:8px 10px 14px}.sectionTitle,.miniSectionHead{display:flex;align-items:center;justify-content:space-between}.sectionTitle{height:34px}.sectionTitle>div{display:flex;align-items:center;gap:6px}.sectionTitle b{font-size:12px}.sectionTitle button,.textBtn{border:0;background:#15373c;color:#a7bbbc;border-radius:8px;padding:6px 9px;font-size:8px}.gameGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}.gameCard{min-width:0;aspect-ratio:.78;border-radius:8px;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.09);background:linear-gradient(155deg,#e74357,#762495 52%,#19374b);box-shadow:0 7px 16px rgba(0,0,0,.22);padding:0;display:flex;flex-direction:column;justify-content:flex-end}.gameCard:nth-child(2n){background:linear-gradient(155deg,#6b2198,#ec4c42 52%,#153848)}.gameCard:nth-child(3n){background:linear-gradient(155deg,#ffad37,#aa2b4f 52%,#17304c)}.gameCard:nth-child(4n){background:linear-gradient(155deg,#215fb8,#a636b5 52%,#163941)}.gameCard:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 30%,rgba(255,255,255,.25),transparent 28%),linear-gradient(180deg,transparent 42%,rgba(0,0,0,.8));pointer-events:none}.gameIcon{position:absolute;top:15px;left:0;right:0;text-align:center;font-size:31px;filter:drop-shadow(0 4px 5px #0007)}.gameCard h3{position:relative;z-index:2;margin:0;padding:0 4px 5px;font-size:8px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.gameCard p,.gameMeta,.gameCard>.primary{display:none}.gameCard.off{opacity:.45;filter:grayscale(.5)}.gameCard:not(.off){cursor:pointer}.gameCard:not(.off):active{transform:scale(.96)}
+.promoStrip{margin:4px 10px 10px;background:linear-gradient(110deg,#1b2537,#15283b);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px;display:flex;align-items:center;justify-content:space-between}.promoStrip>div{display:grid;grid-template-columns:auto 1fr;column-gap:8px}.promoStrip>div>span{grid-row:1/3;font-size:28px}.promoStrip b{font-size:11px}.promoStrip small{font-size:8px;color:#9eacb6;margin-top:3px}.promoStrip button{border:0;border-radius:7px;background:#6c48e5;color:white;padding:7px 10px;font-size:9px;font-weight:900}
+.walletSection,.compactSection{background:#101724;color:#fff;margin:8px 10px 12px;padding:12px;border-radius:12px}.walletCard{background:#1a2132;border:1px solid #2c3448;border-radius:12px;padding:12px}.walletSummary{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.walletSummary>div{background:#232a3e;border-radius:8px;padding:10px 8px}.walletSummary small{display:block;color:#909bb0;font-size:8px}.walletSummary b{display:block;margin-top:3px;font-size:14px}.walletActions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.walletActions button{border:0;border-radius:8px;color:#fff;padding:10px;font-weight:900;font-size:10px}.depositBtn{background:#ff3e45}.withdrawBtn{background:#6e87ff}.miniSectionHead{margin:13px 0 7px}.miniSectionHead b{font-size:10px}.miniSectionHead select{background:#1b2334;color:#fff;border:1px solid #30384b;border-radius:6px;padding:6px;font-size:8px}.listPanel,.supportPanel{background:#171e2d;border:1px solid #293246;border-radius:10px;padding:10px}.row{display:grid;grid-template-columns:1.2fr .65fr .75fr 1.2fr;gap:7px;padding:9px 0;border-bottom:1px solid #283144;font-size:8px}.row:last-child{border:0}.pos{color:#56deaa}.neg{color:#ff7381}.status{display:inline-block;background:#29344a;border-radius:999px;padding:3px 6px}.supportPanel label{display:block;color:#aab4c4;font-size:8px;margin:7px 0 4px}.supportPanel input,.supportPanel textarea{width:100%;border:1px solid #30394e;border-radius:8px;background:#0e1420;color:#fff;padding:10px}.supportPanel textarea{min-height:90px}.wide{width:100%}.primary{border:0;border-radius:8px;background:linear-gradient(90deg,#7c4ce2,#5a49d9);color:#fff;padding:10px;font-weight:900;margin-top:8px}
+.floatingTools{position:fixed;right:8px;bottom:90px;z-index:45;display:grid;gap:8px}.floatingTools button{width:39px;height:39px;border-radius:50%;border:2px solid #9256ff;background:#10222c;color:#fff;font-size:17px;box-shadow:0 5px 16px #0006}.bottomNav{position:fixed;z-index:50;bottom:0;left:50%;transform:translateX(-50%);width:min(560px,100%);height:62px;background:#087b78;border-top:1px solid rgba(255,255,255,.12);display:grid;grid-template-columns:repeat(5,1fr);padding-bottom:env(safe-area-inset-bottom)}.bottomNav button{border:0;background:none;color:#cce6e4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:18px}.bottomNav span{font-size:8px}.bottomNav button.active{color:#ffdd4e}.bottomNav .walletCenter{background:#ffe68c;color:#254a50;margin:4px 4px -1px;border-radius:8px 8px 0 0}.bottomNav .walletCenter span{font-weight:900}
+.modal{position:fixed;inset:0;z-index:100;display:none;place-items:center;background:rgba(0,0,0,.72);padding:14px}.modal.show{display:grid}.modalCard{position:relative;width:min(460px,96vw);max-height:90vh;overflow:auto;background:#151b2b;border:1px solid #313a51;border-radius:15px;padding:20px;color:#fff}.x{position:absolute;right:10px;top:8px;border:0;background:#252d41;color:#fff;width:32px;height:32px;border-radius:9px;font-size:20px}.pageModal,.moneyPageModal{padding:0;background:#111522}.accountPage,.moneyPage{width:min(560px,100%);height:100dvh;overflow:auto}.accountPage{background:#171b2c;color:#fff}.accountTop{height:62px;display:grid;grid-template-columns:44px 1fr 44px;align-items:center;text-align:center;border-bottom:1px solid rgba(255,255,255,.04)}.accountTop button,.moneyTop button{border:0;background:none;color:inherit;font-size:31px}.accountTop b{font-size:15px}.authPage{padding:0 13px}.authTabs{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #2b3145;margin-bottom:14px}.authTabs button{border:0;background:none;color:#919bb0;padding:14px 4px;font-weight:900}.authTabs button.on{color:#fff;border-bottom:2px solid #5d63ff}.authBox{padding-top:6px}.inputShell{height:48px;border:1px solid #293147;background:#101624;border-radius:5px;display:flex;align-items:center;padding:0 10px;margin-bottom:12px}.inputShell>span{color:#8791a6;margin-right:8px}.inputShell input{flex:1;border:0;background:none;color:#fff;outline:0}.inputShell button{border:0;background:none;color:#778399}.authMeta{display:flex;justify-content:space-between;color:#7d899e;font-size:9px;margin:6px 0 14px}.authMeta label{display:flex;gap:5px;align-items:center}.authPrimary,.authSecondary{width:100%;height:42px;border-radius:4px;font-weight:900;margin-bottom:10px}.authPrimary{border:0;background:#6046d7;color:#fff}.authSecondary{border:1px solid #493aa4;background:transparent;color:#7665dd}.orLine{display:flex;align-items:center;gap:10px;color:#747e90;font-size:8px;margin:21px 0 13px}.orLine:before,.orLine:after{content:"";height:1px;flex:1;background:#2b3345}.authSeal{width:42px;height:42px;border-radius:50%;margin:auto;background:#fff;color:#293141;display:grid;place-items:center;font-size:23px;font-weight:1000}
+.memberPage{padding:14px 16px 30px}.memberCard{background:linear-gradient(135deg,#242a44,#1d2238);border:1px solid #303852;border-radius:15px;overflow:hidden}.memberIdentity{position:relative;min-height:86px;padding:14px;display:flex;align-items:flex-start;gap:10px}.memberIdentity:after{content:"";position:absolute;right:-15px;top:-22px;width:135px;height:95px;border-radius:0 0 0 80px;background:linear-gradient(145deg,#536ff7,#4779ff);transform:rotate(5deg)}.avatar{width:39px;height:39px;border-radius:5px;display:grid;place-items:center;background:#ddd;color:#202532;font-weight:1000;z-index:2}.memberIdentity>div:nth-child(2){z-index:2}.memberIdentity b{display:block;font-size:12px}.memberIdentity small{display:block;color:#a7b0c0;font-size:8px;margin-top:5px}.level{z-index:3;color:#ffe584;font-size:8px;font-weight:900}.balanceRibbon{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 14px 13px}.balanceRibbon>div{background:#30364e;border-radius:6px;padding:10px;text-align:center}.balanceRibbon small{display:block;font-size:8px;color:#bbc2d0}.balanceRibbon b{display:block;font-size:14px;margin-top:4px}.accountActions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:16px 0}.accountActions button{border:0;border-radius:999px;background:#30364a;color:#fff;padding:9px 6px;font-size:9px;font-weight:900}.accountActions .red{background:#ff353b}.accountActions .blue{background:#6483ff}.accountGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.accountGrid button{position:relative;min-height:79px;border:1px solid #30374f;border-radius:8px;background:#23283d;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:6px}.accountGrid i{font-style:normal;font-size:21px;color:#ffe370}.accountGrid span{font-size:8px;line-height:1.2;text-align:center}.accountGrid em{position:absolute;right:6px;top:5px;background:#ef3e55;color:#fff;width:17px;height:17px;border-radius:50%;display:grid;place-items:center;font-size:7px;font-style:normal}.logoutBtn{width:100%;border:1px solid #4a3440;background:#2b1a25;color:#ff8394;border-radius:8px;padding:11px;margin-top:15px;font-weight:900}
+.moneyPage{background:#f8f8fa;color:#222;display:flex;flex-direction:column}.moneyTop{height:58px;background:#087b78;color:#fff;display:grid;grid-template-columns:45px 1fr 45px;align-items:center;text-align:center;position:sticky;top:0;z-index:2}.moneyTop b{font-size:14px}.moneyTop .historyBtn{font-size:20px}.moneyBody{padding:10px 11px 90px}.moneyLabel{font-size:10px;font-weight:900;margin:10px 0 7px}.moneyLabel i{display:inline-block;width:5px;height:5px;border-radius:50%;background:#f3a600;margin-right:4px}.methodGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}.methodGrid button{min-height:86px;border:1px solid #e4e5e8;background:#fff;border-radius:5px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:#333}.methodGrid span{font-size:24px;color:#ea4d68}.methodGrid b{font-size:9px}.methodGrid small{font-size:7px;color:#7a7f87}.methodGrid button.selected,.channelGrid button.selected{border-color:#e84050;color:#d63242;box-shadow:inset 0 0 0 1px #e84050}.channelGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}.channelGrid button,.amountGrid button{border:1px solid #e7e7ea;background:#fff;border-radius:4px;min-height:48px;font-size:9px;font-weight:900;color:#333}.amountGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}.amountGrid button{min-height:36px;color:#666}.amountGrid button.active{border-color:#e33d52;color:#d52b42}.amountInput{height:42px;border:1px solid #e2e3e6;background:#fff;border-radius:5px;display:flex;align-items:center;margin-top:8px;padding:0 10px}.amountInput span{font-size:13px;margin-right:7px}.amountInput input{border:0;outline:0;flex:1;font-weight:800}.moneyHint{font-size:8px;color:#8b8f95}.moneyNote{width:100%;border:1px solid #e2e3e6;border-radius:5px;min-height:64px;padding:9px;resize:none}.creditsNotice{font-size:8px;color:#7c8188;background:#fff7df;border:1px solid #f1e3b6;border-radius:5px;padding:8px;margin-top:8px}.moneyNext{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(560px,100%);height:57px;border:0;background:#d5d5d8;color:#fff;font-weight:950;font-size:13px}.moneyNext.ready{background:#087b78}
+.gameModalCard{background:#151b2b}.gamePlay{text-align:center}.gamePlay .big{font-size:65px}.pickGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.pickGrid.six{grid-template-columns:repeat(3,1fr)}.pickGrid button{border:1px solid #343d54;background:#222a3f;color:#fff;border-radius:8px;padding:11px}.pickGrid button.on{border-color:#6f59ff;background:#393164}.gamePlay label{display:block;color:#a9b1c0;font-size:9px;margin:10px 0 5px}.gamePlay input{width:100%;background:#0f1520;color:#fff;border:1px solid #343d54;border-radius:8px;padding:11px}.resultBox{margin:10px 0;background:#101621;border:1px solid #30394d;border-radius:8px;padding:10px;font-size:10px}.win{color:#55e2a9}.lose{color:#ff7784}.eyebrow{font-size:8px;letter-spacing:1.3px;color:#8d7bff;font-weight:900}
+.toast{position:fixed;z-index:300;left:50%;bottom:75px;transform:translate(-50%,12px);opacity:0;background:#101522;color:#fff;border:1px solid #343d54;border-radius:8px;padding:10px 13px;font-size:9px;transition:.2s;pointer-events:none}.toast.show{opacity:1;transform:translate(-50%,0)}
+.adminModal{padding:8px;background:rgba(0,0,0,.85)}.adminShell{width:min(1180px,98vw);height:min(850px,96vh);overflow:auto;background:#0c111b;color:#fff;border:1px solid #293247;border-radius:15px;padding:14px}.adminTop{display:flex;justify-content:space-between}.adminTop small{display:block;color:#8e9bad}.adminTop button,.mini,.danger{border:1px solid #303a50;background:#192234;color:#fff;border-radius:7px;padding:7px 9px}.danger{background:#3b1c25;color:#ff8b99}.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin:12px 0}.stat{background:#151e2e;border:1px solid #29344a;border-radius:9px;padding:10px}.stat b{display:block;color:#55e2aa;font-size:18px}.stat span{font-size:7px;color:#929fb0}.adminTabs{display:flex;gap:5px;overflow:auto;margin-bottom:8px}.adminTabs button{white-space:nowrap;border:1px solid #303a50;background:#171f2f;color:#9ba6b6;border-radius:7px;padding:8px}.adminTabs button.on{background:#fff;color:#111}.adminContent{background:#111824;border:1px solid #263047;border-radius:9px;padding:10px}.adminBlock{border-bottom:1px solid #293246;padding:10px 0}.adminGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.adminGrid label,.adminUser label{font-size:7px;color:#9aa7b7}.adminGrid input,.adminGrid select,.adminUser input,.adminUser select{width:100%;background:#0e1420;color:#fff;border:1px solid #303a50;border-radius:6px;padding:8px}.adminUser{display:grid;grid-template-columns:1.2fr .8fr .8fr 1.2fr;gap:7px;align-items:center;padding:8px;border-bottom:1px solid #273044;font-size:8px}.adminActions{display:flex;flex-wrap:wrap;gap:4px}.fileLabel{display:block;padding:10px;border:1px dashed #3c4861;border-radius:8px}.adminTable{width:100%;border-collapse:collapse;font-size:8px}.adminTable th,.adminTable td{padding:7px;border-bottom:1px solid #273044;text-align:left}
+@media(min-width:561px){body{background:#06191e}.homeShell{box-shadow:0 0 0 1px #153136}.appHeader{width:560px;margin:auto;border-radius:0}.gameGrid{grid-template-columns:repeat(5,1fr)}}
+@media(max-width:390px){.promoHero{min-height:150px}.promoCopy{width:70%}.promoHero h1{font-size:17px}.gameGrid{gap:5px}.accountGrid{gap:7px}.accountGrid button{min-height:74px}.methodGrid button{min-height:80px}.amountGrid{grid-template-columns:repeat(4,1fr)}.stats{grid-template-columns:repeat(3,1fr)}.adminGrid{grid-template-columns:1fr}.adminUser{grid-template-columns:1fr 1fr}}
+
+/* V4 Easy Game Manager */
+.gameThumb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.gameHeroThumb{width:132px;height:132px;object-fit:cover;border-radius:24px;border:1px solid rgba(255,255,255,.13);box-shadow:0 18px 38px rgba(0,0,0,.34);margin:8px auto 12px;display:block}
+.gameDescription{font-size:10px;color:#96a5b5;line-height:1.45;margin:0 auto 12px;max-width:330px}
+.gameManagerHero{padding:14px;border-radius:12px;background:linear-gradient(135deg,#102d34,#181d35);border:1px solid #2b4652;margin-bottom:9px}
+.gameManagerHero b{display:block;font-size:15px}.gameManagerHero span{display:block;margin-top:5px;font-size:9px;color:#a7bec1}
+.gameUploadBox{margin-top:9px;text-align:center;font-weight:800;background:#0d1721}
+.installStatus{font-size:8px;color:#92a4b4;margin-top:7px}.span2{grid-column:span 2}
+.adminGameIdentity{display:flex;align-items:center;gap:8px}.adminGameThumb{width:46px;height:46px;object-fit:cover;border-radius:9px;border:1px solid #33445a}.adminGameIcon{width:46px;height:46px;display:grid;place-items:center;font-size:27px;background:#111c29;border:1px solid #33445a;border-radius:9px}
+.status.testOk{background:#153a2d;color:#64e0a9}.status.testNeed{background:#412a18;color:#ffc67e}.adminActions button:disabled{opacity:.38;cursor:not-allowed}
+@media(max-width:390px){.span2{grid-column:span 1}.gameAdminRow{grid-template-columns:1fr}.adminGameThumb,.adminGameIcon{width:54px;height:54px}}
+
+/* V5 bKash deposit flow */
+.depositMethodGrid{grid-template-columns:repeat(4,1fr)}
+.bkashMethod{position:relative}.bkashMark{width:27px;height:27px;border-radius:8px;background:#e2136e;color:#fff!important;display:grid;place-items:center;font-weight:1000;font-size:18px;line-height:1;text-transform:lowercase}.bkashMark.big{width:42px;height:42px;border-radius:11px;font-size:27px}
+.paymentAvailability{margin:9px 0 0;padding:9px 10px;border-radius:6px;background:#fff;border:1px solid #e7e7eb;font-size:9px;color:#555}.okDot,.offDot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px}.okDot{background:#15a66d}.offDot{background:#d43a48}
+.paySummary{text-align:center;padding:18px 10px 13px}.paySummary small{display:block;color:#8a8e95;font-size:9px}.paySummary strong{display:block;color:#e2136e;font-size:28px;margin-top:3px}
+.bkashBrandCard{display:flex;align-items:center;justify-content:center;gap:9px;background:#fff;border:1px solid #ececf0;border-radius:8px;padding:12px;color:#e2136e}
+.paymentNumberCard{display:flex;align-items:center;justify-content:space-between;background:#fff0f7;border:1px solid #f7c7dc;border-radius:8px;padding:11px 12px}.paymentNumberCard small{display:block;color:#8a7180;font-size:8px}.paymentNumberCard b{display:block;color:#d80d65;font-size:18px;letter-spacing:.3px}.paymentNumberCard button{border:1px solid #e2136e;background:#fff;color:#e2136e;border-radius:6px;padding:8px 14px;font-weight:900;font-size:10px}
+.txidInput{height:45px;background:#fff;border:1px solid #dfe1e6;border-radius:7px;padding:0 10px}.txidInput input{width:100%;height:100%;border:0;outline:0;background:transparent;text-transform:uppercase;font-weight:900;letter-spacing:.5px}
+.paymentInstructions{background:#f1f5ff;border:1px solid #dce5fa;border-radius:8px;padding:11px;margin-top:12px;font-size:9px;color:#485468;line-height:1.6}.paymentInstructions>b{color:#27334a}.paymentInstructions ol{margin:7px 0 0;padding-left:17px}
+.paymentProof{margin-top:6px;padding:6px 8px;border:1px solid #303d51;background:#0f1723;border-radius:6px;font-size:9px;line-height:1.5}.paymentProof strong{color:#ff9dcb}
+@media(max-width:390px){.depositMethodGrid{grid-template-columns:repeat(3,1fr)}}
+
+/* V6 bKash + Nagad */
+.nagadMark{width:27px;height:27px;border-radius:8px;background:#f47a20;color:#fff!important;display:grid;place-items:center;font-weight:1000;font-size:15px;line-height:1}.nagadMark.big{width:42px;height:42px;border-radius:11px;font-size:22px}
+.paymentMethodBtn.unavailable{opacity:.45;filter:grayscale(.35)}
+.paymentMethodBtn.unavailable small{color:#a77}
+.paymentSettingsGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.providerAdminCard{padding:11px;border:1px solid #2d3a4e;background:#0f1723;border-radius:10px}.providerAdminTitle{display:flex;align-items:center;gap:8px;margin-bottom:9px}.providerAdminTitle b{font-size:14px}
+.providerAdminCard label{display:block;margin-top:8px}
+@media(max-width:600px){.paymentSettingsGrid{grid-template-columns:1fr}}
+
+/* V7 Pro Manager */
+.bannerStage{min-height:100%;display:flex;align-items:center;justify-content:space-between;background-size:cover;background-position:center;border-radius:inherit;transition:.35s ease}.bannerDots{position:absolute;left:0;right:0;bottom:8px;display:flex;justify-content:center;gap:5px;z-index:3}.bannerDots button{width:7px;height:7px;border:0;border-radius:50%;padding:0;background:rgba(255,255,255,.45)}.bannerDots button.on{width:19px;border-radius:7px;background:#fff}.promoHero{position:relative;overflow:hidden}.promotionGrid{display:grid;gap:9px}.promotionGrid .promoStrip{margin:0}.unreadCount{display:inline-grid;place-items:center;min-width:18px;height:18px;padding:0 5px;border-radius:12px;background:#7b4dff;color:#fff;font-size:9px;margin-left:5px}.notificationCard{display:grid;grid-template-columns:30px 1fr auto;gap:9px;padding:11px;border-bottom:1px solid #273347}.notificationCard.unread{background:rgba(95,73,255,.08)}.notificationIcon{width:28px;height:28px;border-radius:9px;background:#202c43;display:grid;place-items:center}.notificationCard p{margin:3px 0;font-size:10px}.notificationCard small{color:#78889c;font-size:8px}.notificationActions{display:flex;gap:4px}.notificationActions button{border:1px solid #34445c;background:#111a2a;color:#bac7d8;border-radius:6px;padding:4px 7px;font-size:8px}.payoutSettingsCard{padding:18px}.payoutSettingsCard label{display:block;margin:14px 0 7px}.payoutSettingsCard input{width:100%;height:46px;border:1px solid #dfe2e8;border-radius:9px;padding:0 12px}.payoutNumberInput{margin-top:9px}.gameEditGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.gameEditGrid label{font-size:8px}.gameEditGrid input,.gameEditGrid select{width:100%}.checkLine{display:flex!important;align-items:center;gap:6px}.checkLine input{width:auto!important}.contentAdminRow{grid-template-columns:1.2fr 1fr 1fr auto}.adminGrid textarea{min-height:80px}@media(max-width:700px){.contentAdminRow{grid-template-columns:1fr}.gameEditGrid{grid-template-columns:1fr 1fr}}
+
+/* V8 Member Dashboard */
+.memberHero{border-radius:18px;overflow:hidden;background:linear-gradient(145deg,#16273d,#20213f);border:1px solid #32435c;box-shadow:0 16px 40px rgba(0,0,0,.22)}
+.memberProfileLine{display:grid;grid-template-columns:58px 1fr 38px;gap:12px;align-items:center;padding:16px;background:radial-gradient(circle at 90% 0,rgba(115,73,255,.32),transparent 42%)}
+.premiumAvatar{width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,#f7d675,#8d63ff);color:#171a27;font-size:18px;border:3px solid rgba(255,255,255,.18)}
+.memberProfileText b{font-size:16px;display:block}.memberProfileText small{display:block;color:#96a7bb;margin-top:3px}.vipLine{display:flex;gap:7px;align-items:center;margin-top:7px}.vipLine span{background:linear-gradient(90deg,#f4cf61,#ff9b52);color:#33260f;border-radius:999px;padding:3px 8px;font-size:8px;font-weight:1000}.vipLine i{font-style:normal;color:#aab8cb;font-size:8px}
+.memberRefresh{width:36px;height:36px;border-radius:50%;border:1px solid #40516b;background:#172337;color:#b9c7d7;font-size:18px}.memberBalanceBar{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#33425a}.memberBalanceBar>div{background:#172236;padding:12px 16px}.memberBalanceBar small{display:block;color:#8293a7;font-size:8px}.memberBalanceBar strong{display:block;font-size:17px;margin-top:4px}
+.premiumAccountActions{margin:14px 0}.premiumAccountActions button{border-radius:12px;display:flex;align-items:center;justify-content:center;gap:7px;padding:12px 6px}.premiumAccountActions span{font-size:18px}.premiumAccountActions b{font-size:9px}.premiumAccountActions .depositAction{background:linear-gradient(135deg,#ff3366,#e51e56)}.premiumAccountActions .withdrawAction{background:linear-gradient(135deg,#4f7cff,#5b55ff)}.premiumAccountActions .cardAction{background:linear-gradient(135deg,#243148,#29364e)}
+.memberStats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:0 0 14px}.memberStats>div{background:#171f30;border:1px solid #2b374d;border-radius:10px;text-align:center;padding:10px 4px}.memberStats b{display:block;font-size:11px;color:#f1f6fb}.memberStats small{font-size:7px;color:#7f90a5}.premiumMemberGrid{grid-template-columns:repeat(4,1fr)}.premiumMemberGrid button{min-height:86px;background:linear-gradient(180deg,#1e293b,#192131);border-color:#2f3b50}.premiumMemberGrid i{font-size:23px}.premiumMemberGrid span{font-size:7.5px;color:#cbd5e2}.premiumLogout{background:linear-gradient(180deg,#2a1822,#23151d)}
+.simpleConfirm{position:relative;width:min(90vw,390px);margin:auto;background:#121b2b;border:1px solid #34435a;border-radius:18px;padding:22px;color:#fff;box-shadow:0 25px 80px rgba(0,0,0,.5)}.confirmClose{position:absolute;right:11px;top:10px;border:0;background:#202b3d;color:#fff;border-radius:50%;width:30px;height:30px}.simpleConfirm input{width:100%;height:44px;margin:7px 0;border:1px solid #35445b;border-radius:9px;background:#0e1624;color:#fff;padding:0 11px}.confirmIcon,.memberInfoIcon{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;margin:0 auto 10px;background:linear-gradient(135deg,#7250ff,#ff4a7c);font-size:25px}.simpleConfirm h3{text-align:center;margin:8px 0}.simpleConfirm p{text-align:center;color:#9dadbf}.confirmActions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:16px}.confirmActions button{height:42px;border-radius:9px;border:1px solid #35445a;background:#1c2638;color:#fff}.confirmActions .dangerConfirm{background:#e83c58;border-color:#e83c58}.inviteCode{font-size:20px;letter-spacing:3px;text-align:center;background:#0b1320;border:1px dashed #5b72a0;padding:14px;border-radius:10px;margin:12px 0}.memberInfoCard small{display:block;text-align:center;color:#7f91a7;margin-top:10px}.vipProgress{height:8px;background:#263248;border-radius:999px;overflow:hidden;margin:12px 0}.vipProgress span{display:block;height:100%;background:linear-gradient(90deg,#ffcf55,#ff7868)}
+.startupSplash{position:fixed;inset:0;z-index:99999;background:radial-gradient(circle at 50% 38%,#123d44,#06161c 58%,#030b0e);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .35s ease,visibility .35s ease}.startupSplash.hide{opacity:0;visibility:hidden}.splashLogo{width:76px;height:76px;border-radius:22px;background:linear-gradient(135deg,#19d2c7,#7d55ff);display:grid;place-items:center;font-size:28px;font-weight:1000;box-shadow:0 18px 55px rgba(37,205,194,.2)}.startupSplash b{margin-top:14px;font-size:22px;letter-spacing:1px}.startupSplash small{margin-top:5px;color:#78949b;letter-spacing:1px}
+@media(max-width:380px){.premiumMemberGrid{grid-template-columns:repeat(3,1fr)}.memberStats{grid-template-columns:repeat(2,1fr)}}
+
+/* V9 Smart Loading / Network UX */
+.topProgress{position:fixed;z-index:100000;left:0;right:0;top:0;height:3px;pointer-events:none;opacity:0;transition:opacity .2s}.topProgress.show{opacity:1}.topProgress i{display:block;width:12%;height:100%;border-radius:0 3px 3px 0;background:linear-gradient(90deg,#1dd7c9,#7f5cff,#ff4e86);box-shadow:0 0 12px rgba(87,211,220,.5)}.topProgress.working i{animation:topProgressMove 1.25s ease-in-out infinite}.topProgress.slow i{animation-duration:2.4s}.topProgress.done i{width:100%;transition:width .25s ease}
+@keyframes topProgressMove{0%{transform:translateX(-110%);width:18%}50%{width:42%}100%{transform:translateX(520%);width:22%}}
+
+.actionLoading{position:fixed;inset:0;z-index:99990;background:rgba(3,8,14,.56);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:.18s}.actionLoading.show{opacity:1;visibility:visible}.actionLoadingCard{width:min(76vw,310px);text-align:center;background:rgba(27,31,39,.96);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:24px 20px;color:#fff;box-shadow:0 24px 75px rgba(0,0,0,.45)}.actionLoadingCard b{display:block;font-size:14px;margin-top:13px}.actionLoadingCard p{margin:7px 0 0;font-size:10px;color:#c4ccd5;line-height:1.5}.actionLoadingCard small{display:block;margin-top:10px;color:#ffcf76;font-size:8px;line-height:1.45}.actionSpinner{width:52px;height:52px;margin:auto;border-radius:50%;border:4px solid rgba(255,255,255,.16);border-top-color:#76d7ff;border-right-color:#7a5cff;animation:spinLoading .85s linear infinite}.actionSpinner i{display:block;width:16px;height:16px;background:#fff;border-radius:50%;margin:14px;opacity:.14}@keyframes spinLoading{to{transform:rotate(360deg)}}
+.uiBusy{overflow:hidden}.uiBusy .bottomNav,.uiBusy .floatTools{pointer-events:none}
+
+.networkBar{position:fixed;z-index:100001;top:12px;left:50%;transform:translate(-50%,-70px);display:flex;align-items:center;gap:7px;background:#311c24;border:1px solid #6a3344;color:#ffd9e2;border-radius:999px;padding:8px 14px;box-shadow:0 10px 35px rgba(0,0,0,.3);font-size:9px;transition:.3s}.networkBar.show{transform:translate(-50%,0)}.networkBar span{color:#ff526d}
+
+.resultConfirmCard{text-align:center}.resultIcon{width:62px;height:62px;border-radius:50%;display:grid;place-items:center;margin:0 auto 12px;font-size:30px;font-weight:1000;background:#244c3b;color:#7ef0b7}.resultIcon.error{background:#512332;color:#ff91a9}.resultIcon.warning{background:#554521;color:#ffd778}.resultConfirmCard .authPrimary{margin-top:14px}
+
+.gameSkeleton{pointer-events:none;overflow:hidden}.gameSkeleton:before{content:"";position:absolute;inset:0;transform:translateX(-100%);background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent);animation:skeletonSweep 1.15s infinite}.gameSkeleton .skeletonBlock{height:78px;border-radius:11px;background:#1c2637;margin-bottom:8px}.gameSkeleton span,.gameSkeleton small{display:block;background:#1c2637;border-radius:6px;height:10px;margin:6px 0}.gameSkeleton small{width:65%;height:8px}@keyframes skeletonSweep{to{transform:translateX(100%)}}
+
+.splashDots{display:flex;gap:6px;margin-top:16px}.splashDots i{width:7px;height:7px;border-radius:50%;background:#65ddd4;animation:splashDot 1s infinite}.splashDots i:nth-child(2){animation-delay:.15s}.splashDots i:nth-child(3){animation-delay:.3s}@keyframes splashDot{0%,80%,100%{transform:scale(.65);opacity:.35}40%{transform:scale(1);opacity:1}}
+.splashProgress{width:126px;height:4px;background:rgba(255,255,255,.09);border-radius:999px;overflow:hidden;margin-top:13px}.splashProgress span{display:block;width:38%;height:100%;background:linear-gradient(90deg,#16d4c6,#775bff);border-radius:999px;animation:splashProgress 1.1s ease-in-out infinite}@keyframes splashProgress{0%{transform:translateX(-110%)}100%{transform:translateX(360%)}}
+
+/* V10 Universal Game SDK */
+.gameModalCard{width:min(96vw,980px);max-height:94vh}
+.universalGameShell{display:flex;flex-direction:column;min-height:72vh;background:#071019;border-radius:14px;overflow:hidden;border:1px solid #28364a}
+.universalGameTop{height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:linear-gradient(90deg,#111d2c,#102a30);border-bottom:1px solid #2a394d}
+.universalGameTop small{display:block;text-transform:uppercase;color:#8193a8;font-size:8px}.universalGameTop b{display:block;margin-top:2px;font-size:14px}
+.universalWallet{font-size:8px;color:#8fa1b5}.universalWallet strong{display:block;text-align:right;color:#f0d46a;font-size:16px}
+#universalGameFrame{width:100%;height:min(72vh,720px);border:0;background:#050a10;display:block}
+.universalSafety{padding:7px 11px;background:#0e1723;color:#6f8195;font-size:7px;text-align:center;border-top:1px solid #263347}
+@media(max-width:600px){.gameModalCard{width:100vw;height:100dvh;max-height:100dvh;border-radius:0}.universalGameShell{min-height:calc(100dvh - 50px);border-radius:0}#universalGameFrame{height:calc(100dvh - 128px)}}
+
+
+/* V12.1 Fullscreen game viewer + premium wallet UI */
+body.gameViewerOpen{overflow:hidden;padding-bottom:0}
+#gameModal{padding:0;background:#000;place-items:stretch}
+#gameModal.show{display:block}
+#gameModal .gameModalCard{position:fixed;inset:0;width:100vw;height:100dvh;max-width:none;max-height:none;margin:0;padding:0;border:0;border-radius:0;background:#000;overflow:hidden;box-shadow:none}
+#gameModal #gameBody{width:100%;height:100%;padding:0;margin:0}
+#gameModal .fullscreenGameShell{width:100%;height:100dvh;min-height:100dvh;border:0;border-radius:0;background:#000;overflow:hidden}
+#gameModal #universalGameFrame{display:block;width:100%;height:100dvh;min-height:100dvh;border:0;margin:0;padding:0;background:#000}
+#gameModal .universalGameTop,#gameModal .universalWallet,#gameModal .universalSafety{display:none!important}
+#gameModal .gameCloseBtn{position:fixed;z-index:10020;right:max(10px,env(safe-area-inset-right));top:max(10px,env(safe-area-inset-top));width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.13);background:rgba(12,18,27,.72);backdrop-filter:blur(10px);color:#fff;font-size:24px;line-height:1;box-shadow:0 6px 22px rgba(0,0,0,.34)}
+#gameModal .gameCloseBtn:active{transform:scale(.94)}
+
+/* Header wallet: compact, polished and readable */
+.headerWallet{gap:8px}
+.walletHead.premiumWalletHead{height:44px;min-width:112px;padding:0 9px 0 7px;border:1px solid rgba(255,255,255,.14);border-radius:14px;background:linear-gradient(135deg,rgba(6,76,80,.98),rgba(21,48,78,.96));box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 8px 22px rgba(0,0,0,.16);display:grid;grid-template-columns:30px 1fr 12px;align-items:center;gap:6px;text-align:left}
+.walletHeadIcon{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,#21d2bd,#7064ff);color:#fff;font-size:13px;box-shadow:0 5px 14px rgba(39,210,189,.18)}
+.walletHeadText{display:block;min-width:0;line-height:1.05}.walletHeadText small{display:block;color:#8fb7b9;font-size:7px;font-weight:800;letter-spacing:.2px}.walletHeadText b{display:flex;align-items:baseline;gap:3px;margin-top:3px;color:#f8fbff;font-size:13px;font-weight:1000;white-space:nowrap}.walletHeadText b i{font-style:normal;color:#68ead3;font-size:10px}.walletHeadArrow{color:#7ea7aa;font-size:18px;line-height:1}
+.profileHead.premiumProfileHead{width:44px;height:44px;border-radius:14px;border:1px solid rgba(255,255,255,.14);background:linear-gradient(145deg,#155b66,#273a65);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 8px 22px rgba(0,0,0,.14)}
+
+/* Wallet / member balance cards */
+.walletSummary>div{position:relative;overflow:hidden;background:linear-gradient(145deg,#202b3e,#192437);border:1px solid rgba(255,255,255,.07);box-shadow:inset 0 1px 0 rgba(255,255,255,.03)}
+.walletSummary>div:after{content:"";position:absolute;width:55px;height:55px;border-radius:50%;right:-25px;top:-28px;background:rgba(75,224,197,.08)}
+.walletSummary small{color:#8299aa}.walletSummary b{color:#f4fbff;font-size:15px}.walletSummary>div:first-child b{color:#6ce6c7}
+.memberBalanceBar{background:rgba(255,255,255,.06)}.memberBalanceBar>div{background:linear-gradient(145deg,#18283b,#172235)}.memberBalanceBar strong{color:#f5fbff}.memberBalanceBar>div:first-child strong{color:#74e7ce}
+
+@media(max-width:430px){
+  .appHeader{padding:0 10px;gap:7px}.brand{font-size:21px}.walletHead.premiumWalletHead{min-width:102px;height:42px}.profileHead.premiumProfileHead{width:42px;height:42px}.walletHeadIcon{width:28px;height:28px}.walletHeadText b{font-size:12px}
+}
+
+/* V12.2 — Mobile Admin Game Manager */
+.adminGameCard{
+  margin:12px 0;padding:14px;border:1px solid #2b3950;border-radius:16px;
+  background:linear-gradient(180deg,#151e2d,#101724);
+  box-shadow:0 10px 28px rgba(0,0,0,.18);overflow:hidden
+}
+.adminGameCardHead{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:13px}
+.adminGameIdentity{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
+.adminGameThumb,.adminGameIcon{flex:0 0 58px;width:58px;height:58px;border-radius:14px}
+.adminGameThumb{object-fit:cover;border:1px solid #3a4b64;background:#0c1320}
+.adminGameIcon{display:grid;place-items:center;font-size:30px;background:linear-gradient(145deg,#15243a,#0e1725);border:1px solid #344760}
+.adminGameTitleWrap{min-width:0;flex:1}
+.adminGameTitle{display:block;font-size:14px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#f5f8fc}
+.adminGameSlug{display:block;margin-top:3px;font-size:8px;color:#7f91a8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.adminGameMeta{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.adminGameMeta span{font-size:7px;padding:3px 6px;border-radius:999px;background:#202c3f;color:#aebdce;border:1px solid #314059}
+.adminGameStatusWrap{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex:0 0 auto}
+.publishedStatus{background:#16372e!important;color:#74e3b0!important}
+
+.mobileGameEditGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.mobileGameEditGrid label{min-width:0;font-size:8px;color:#91a2b6}
+.mobileGameEditGrid input,.mobileGameEditGrid select{
+  width:100%;min-width:0;height:39px;margin-top:4px;padding:0 10px;
+  border:1px solid #33435b;border-radius:9px;background:#0c1421;color:#edf3f8;outline:none
+}
+.mobileGameEditGrid input:focus,.mobileGameEditGrid select:focus{border-color:#4d7eff;box-shadow:0 0 0 2px rgba(77,126,255,.12)}
+.mobileGameEditGrid .span2{grid-column:1/-1}
+.featuredToggle{grid-column:1/-1!important;display:flex!important;align-items:center;gap:8px;background:#111b2a;border:1px solid #2b3b52;border-radius:10px;padding:9px 10px}
+.featuredToggle input{width:18px!important;height:18px!important;margin:0!important}
+.featuredToggle span{font-size:9px;color:#c3cfdb}
+
+.adminGameStats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:12px 0}
+.adminGameStats>div{padding:9px 4px;text-align:center;border:1px solid #2a384d;border-radius:10px;background:#0d1623}
+.adminGameStats b{display:block;font-size:10px;color:#f0f4f8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.adminGameStats small{display:block;margin-top:3px;font-size:7px;color:#77899e}
+
+.adminGameActions{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.adminGameActions button{
+  min-height:39px;border:1px solid #35455d;border-radius:9px;background:#1a2537;color:#dce6f0;
+  font-size:8px;font-weight:800;padding:7px 4px
+}
+.adminGameActions button.primaryAction{background:linear-gradient(135deg,#6748ef,#4d75ff);border-color:#6f64f8;color:#fff}
+.adminGameActions button.danger{background:#391c27;border-color:#5f2938;color:#ff8ea3}
+.adminGameActions button:disabled{opacity:.36}
+
+@media(max-width:560px){
+  .adminContent{padding:8px}
+  .adminGameCard{margin:10px 0;padding:12px;border-radius:14px}
+  .adminGameCardHead{align-items:flex-start}
+  .adminGameStatusWrap .status{font-size:7px;white-space:nowrap}
+  .mobileGameEditGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .adminGameActions{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:350px){
+  .mobileGameEditGrid{grid-template-columns:1fr}
+  .mobileGameEditGrid .span2,.featuredToggle{grid-column:1!important}
+  .adminGameStats{grid-template-columns:repeat(2,1fr)}
+}
+
+/* V12.3 imported game wallet compatibility */
+.gameViewerOpen #gameModal{background:#05090d}
+
+/* V12.4 — Fullscreen wallet balance overlay */
+#gameModal .gameWalletFloat{
+  position:fixed;z-index:10019;
+  top:max(10px,env(safe-area-inset-top));
+  right:max(58px,calc(env(safe-area-inset-right) + 58px));
+  height:38px;min-width:108px;max-width:155px;
+  display:flex;align-items:center;gap:7px;
+  padding:4px 5px 4px 7px;
+  border:1px solid rgba(91,235,196,.22);
+  border-radius:14px;
+  background:linear-gradient(135deg,rgba(7,30,35,.82),rgba(18,27,45,.84));
+  backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px);
+  box-shadow:0 8px 26px rgba(0,0,0,.30),inset 0 1px 0 rgba(255,255,255,.06);
+  color:#fff
+}
+.gameWalletFloatIcon{
+  flex:0 0 27px;width:27px;height:27px;border-radius:9px;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,#22d0b6,#6c67ff);
+  color:#fff;font-size:12px;font-weight:900
+}
+.gameWalletFloatText{display:block;min-width:0;flex:1;line-height:1}
+.gameWalletFloatText small{display:block;color:#81a7a5;font-size:6.5px;font-weight:900;letter-spacing:.35px;text-transform:uppercase}
+.gameWalletFloatText b{display:block;margin-top:4px;color:#eafff8;font-size:12px;font-weight:1000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#gameModal .gameWalletFloat button{
+  flex:0 0 24px;width:24px;height:24px;border:0;border-radius:8px;
+  background:rgba(255,255,255,.07);color:#9de9d2;font-size:13px;padding:0
+}
+#gameModal .gameWalletFloat button.spin{animation:walletRefreshSpin .55s linear}
+@keyframes walletRefreshSpin{to{transform:rotate(360deg)}}
+@media(max-width:360px){
+  #gameModal .gameWalletFloat{min-width:94px;max-width:125px;padding-left:5px;gap:5px}
+  .gameWalletFloatIcon{width:24px;height:24px;flex-basis:24px}
+  .gameWalletFloatText b{font-size:11px}
+}
+
+/* V12.7 — Minimal Direct Game Admin
+   All V12.4 UI/settings stay unchanged. */
+.openInternalAdminBtn{
+  border-color:#2f6c59!important;
+  background:linear-gradient(135deg,#173b31,#163348)!important;
+  color:#8ff0c7!important
+}
+.gameAdminMode #gameWalletFloat{display:none!important}
+.platformGameAdminOnly{
+  min-height:100dvh;display:grid;place-items:center;align-content:center;text-align:center;
+  padding:30px;background:radial-gradient(circle at 50% 30%,#15333b,#071018 60%);
+  color:#eaf4f3
+}
+.platformGameAdminOnly .big{font-size:54px}
+.platformGameAdminOnly h2{margin:10px 0 5px}
+.platformGameAdminOnly p{max-width:340px;color:#8fa4ab;font-size:10px;line-height:1.6}
+
+/* V12.8 native-control passthrough:
+   no extra game settings UI is injected; the original game remains visually unchanged. */
+.gameAdminMode #gameWalletFloat{display:none!important}
+
+/* V12.10 — preserve original game UI.
+   Central wallet balance is shown through the game's own native balance area. */
+#gameModal .gameWalletFloat,
+#tbGameBalanceChip{display:none!important}
+
+/* =========================================================
+   V12.11 — Professional Mobile UX
+   ========================================================= */
+:root{
+  --pro-teal:#087b78;--pro-teal-deep:#075b5b;--pro-navy:#10192d;--pro-navy-2:#151f36;
+  --pro-violet:#6252ed;--pro-pink:#ee476c;--pro-cyan:#42d5ce;--pro-light:#f7f8fb;
+  --pro-light-card:#fff;--pro-light-line:#e9edf3;--pro-light-text:#253047;--pro-soft:#76839a
+}
+body{
+  background:radial-gradient(circle at 50% -100px,rgba(33,210,190,.18),transparent 330px),
+  linear-gradient(180deg,#087b78 0,#07575a 52%,#06353c 100%);
+  -webkit-tap-highlight-color:transparent
+}
+button{transition:transform .14s ease,filter .16s ease,opacity .16s ease,background .2s ease,border-color .2s ease}
+button:active{transform:scale(.97)}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid rgba(93,105,255,.75)!important;outline-offset:2px}
+
+.appTrustStrip{width:min(560px,100%);height:38px;margin:0 auto;display:grid;grid-template-columns:30px 1fr auto;align-items:center;gap:8px;padding:0 11px;background:rgba(6,53,59,.86);border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.trustMark{width:27px;height:27px;border-radius:8px;display:grid;place-items:center;background:linear-gradient(145deg,#16bdb1,#285071);font-size:8px;font-weight:1000;border:1px solid rgba(255,255,255,.15);box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
+.trustCopy{min-width:0;line-height:1.08}.trustCopy b{display:block;font-size:9px}.trustCopy span{display:block;color:#9fc0bf;font-size:6.5px;margin-top:2px}
+.trustStars{color:#ffd859;font-size:8px;white-space:nowrap}.trustStars small{color:#d6e5e4;font-size:7px}
+
+.appHeader{height:60px;background:rgba(5,111,108,.94);box-shadow:0 7px 25px rgba(3,37,42,.18)}
+.brand{letter-spacing:-1.3px;text-shadow:0 3px 12px rgba(0,0,0,.12)}
+.loginMini,.registerMini{height:34px;border-radius:9px;padding:0 12px;box-shadow:0 7px 16px rgba(0,0,0,.12)}
+.loginMini{background:linear-gradient(135deg,#674ee7,#5559ee)}.registerMini{background:linear-gradient(135deg,#ef4b70,#de3158)}
+
+.homeShell{padding-top:5px}
+.promoHero{margin-top:5px;border-radius:14px;min-height:164px;border-color:rgba(255,255,255,.12);box-shadow:0 14px 35px rgba(0,0,0,.19);isolation:isolate}
+.promoHero:after{content:"";position:absolute;inset:auto -35px -58px auto;width:190px;height:190px;border-radius:50%;background:radial-gradient(circle,rgba(255,223,86,.18),transparent 64%);z-index:-1}
+.promoBadge{display:inline-flex;padding:4px 7px;border:1px solid rgba(174,254,240,.22);background:rgba(5,33,42,.26);border-radius:999px;font-size:7px}
+.promoHero h1{font-size:20px;letter-spacing:-.35px}.promoHero p{font-size:9px;line-height:1.5}
+.promoHero button{height:32px;padding:0 15px;box-shadow:0 8px 18px rgba(238,157,48,.2)}
+.bannerStage{transition:opacity .22s ease,transform .22s ease}.bannerDots{bottom:7px}.bannerDots button{width:5px;height:5px;opacity:.45}.bannerDots button.on{width:17px;border-radius:999px;opacity:1}
+.ticker{height:34px;border-radius:10px;background:rgba(8,37,44,.82);border:1px solid rgba(255,255,255,.06);box-shadow:inset 0 1px 0 rgba(255,255,255,.03)}
+.quickCats{gap:7px}.quickCats button{height:68px;border-radius:12px;background:linear-gradient(180deg,#12333a,#102b33);box-shadow:0 7px 18px rgba(0,0,0,.12);border-color:rgba(255,255,255,.07)}
+.quickCats button i{width:31px;height:31px;border-radius:10px;display:grid;place-items:center;background:rgba(255,255,255,.04);font-size:18px}
+.quickCats button.active{background:linear-gradient(150deg,#7252ef,#4f5df2)}.quickCats button.active i{background:rgba(255,255,255,.14)}
+.gameGrid{gap:8px}.gameCard{border-radius:12px;border-color:rgba(255,255,255,.1);box-shadow:0 8px 19px rgba(0,0,0,.2);transition:transform .16s ease,filter .2s ease,box-shadow .2s ease}
+.gameThumb{width:100%;height:100%;object-fit:cover}.gameCard h3{padding:0 5px 7px;font-size:7.5px;text-shadow:0 2px 8px #000;background:linear-gradient(180deg,transparent,rgba(4,8,16,.7))}
+@media(hover:hover) and (pointer:fine){.gameCard:not(.off):hover{transform:translateY(-2px);filter:brightness(1.06);box-shadow:0 12px 24px rgba(0,0,0,.25)}}
+.floatingTools{right:10px;bottom:82px;gap:7px}.floatingTools button{width:42px;height:42px;border:1px solid rgba(170,102,255,.72);background:linear-gradient(145deg,rgba(17,31,44,.96),rgba(15,39,46,.96));box-shadow:0 8px 22px rgba(0,0,0,.28),inset 0 0 0 2px rgba(136,72,224,.13)}
+.bottomNav{height:66px;background:rgba(7,115,112,.96);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-top-color:rgba(255,255,255,.14);box-shadow:0 -12px 32px rgba(0,0,0,.12)}
+.bottomNav button{font-size:17px;position:relative}.bottomNav span{font-size:7.5px;font-weight:800}
+.bottomNav button.active:after{content:"";position:absolute;bottom:3px;width:18px;height:2px;border-radius:999px;background:#ffe365}
+.bottomNav .walletCenter{margin:4px 4px 0;border-radius:11px 11px 4px 4px;background:linear-gradient(180deg,#ffedab,#ffd976);box-shadow:0 -5px 18px rgba(255,220,114,.18)}
+
+.modal{opacity:0;transition:opacity .15s ease}.modal.show{opacity:1}
+.modal:not(.entered)>.modalCard,.modal:not(.entered)>.simpleConfirm,.modal:not(.entered)>.accountPage,.modal:not(.entered)>.moneyPage,.modal:not(.entered)>.adminShell{transform:translateY(8px) scale(.985);opacity:.92}
+.modal.entered>.modalCard,.modal.entered>.simpleConfirm,.modal.entered>.accountPage,.modal.entered>.moneyPage,.modal.entered>.adminShell{transform:none;opacity:1;transition:transform .18s ease,opacity .18s ease}
+#gameModal{transition:none!important;opacity:1!important}#gameModal .gameModalCard{transform:none!important;opacity:1!important}
+
+#accountModal:not(.memberTheme){background:rgba(5,10,19,.88);backdrop-filter:blur(9px)}
+#accountModal:not(.memberTheme) .accountPage{background:radial-gradient(circle at 50% 0,rgba(74,73,183,.15),transparent 270px),linear-gradient(180deg,#11192a,#0d1423);color:#fff}
+#accountModal:not(.memberTheme) .accountTop{background:rgba(11,17,30,.8);border-bottom-color:rgba(255,255,255,.05)}
+#accountModal:not(.memberTheme) .authPage{padding:18px 16px 34px}
+#accountModal:not(.memberTheme) .authTabs{width:min(360px,100%);margin:0 auto 22px;border-bottom-color:#263149}
+#accountModal:not(.memberTheme) .authTabs button{height:46px;font-size:12px}
+#accountModal:not(.memberTheme) .authTabs button.on{color:#fff;border-bottom-color:#438cff}
+#accountModal:not(.memberTheme) .authBox{width:min(400px,100%);margin:auto;padding:0}
+#accountModal:not(.memberTheme) .inputShell{height:52px;border-radius:9px;background:#151f32;border-color:#26334a;margin-bottom:13px;box-shadow:inset 0 1px 0 rgba(255,255,255,.025)}
+#accountModal:not(.memberTheme) .inputShell:focus-within{border-color:#526fe7;box-shadow:0 0 0 3px rgba(82,111,231,.11)}
+#accountModal:not(.memberTheme) .authPrimary{height:47px;border-radius:9px;background:linear-gradient(135deg,#6854ef,#514ce0);box-shadow:0 10px 24px rgba(83,69,225,.2)}
+#accountModal:not(.memberTheme) .authSecondary{height:44px;border-radius:9px;border-color:#403b83;color:#a69bf7}
+#accountModal:not(.memberTheme) .authSeal{box-shadow:0 9px 23px rgba(0,0,0,.2)}
+
+#accountModal.memberTheme{background:#f5f7fb}
+#accountModal.memberTheme .accountPage{color:var(--pro-light-text);background:linear-gradient(150deg,rgba(255,173,115,.13),transparent 190px),#f7f8fb}
+#accountModal.memberTheme .accountTop{position:sticky;top:0;z-index:4;background:rgba(255,255,255,.92);backdrop-filter:blur(15px);border-bottom:1px solid #edf0f5;color:#2d374a}
+#accountModal.memberTheme .accountTop button{color:#354057}
+#accountModal.memberTheme .memberPage{padding:14px 12px 92px}
+#accountModal.memberTheme .memberHero{position:relative;overflow:hidden;border:0;border-radius:18px;padding:0;background:linear-gradient(135deg,#62ddd4 0,#68d9e1 48%,#75cde5 100%);box-shadow:0 12px 30px rgba(59,169,177,.17);color:#23404d}
+#accountModal.memberTheme .memberHero:after{content:"";position:absolute;right:-34px;top:-41px;width:150px;height:150px;border-radius:50%;border:24px solid rgba(255,255,255,.14)}
+#accountModal.memberTheme .memberProfileLine{position:relative;z-index:1;padding:18px 16px 13px}
+#accountModal.memberTheme .premiumAvatar{background:linear-gradient(145deg,#fff,#e7fbfa);color:#22817e;border:3px solid rgba(255,255,255,.68);box-shadow:0 7px 18px rgba(38,125,127,.15)}
+#accountModal.memberTheme .memberProfileText b{color:#1f3944}#accountModal.memberTheme .memberProfileText small{color:#47727a}
+#accountModal.memberTheme .vipLine span{background:rgba(255,255,255,.48);border:1px solid rgba(255,255,255,.46);color:#336771}#accountModal.memberTheme .vipLine i{color:#4a747b}
+#accountModal.memberTheme .memberRefresh{background:rgba(255,255,255,.38);border-color:rgba(255,255,255,.42);color:#286b70}
+#accountModal.memberTheme .memberBalanceBar{margin:0 14px 14px;padding:8px;border-radius:12px;background:rgba(255,255,255,.26)}
+#accountModal.memberTheme .memberBalanceBar>div{background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.5)}
+#accountModal.memberTheme .memberBalanceBar small{color:#5d7d83}#accountModal.memberTheme .memberBalanceBar strong{color:#21464e!important}
+#accountModal.memberTheme .premiumAccountActions{margin:12px 0;gap:8px}
+#accountModal.memberTheme .premiumAccountActions button{min-height:66px;border:1px solid #e8edf3;background:#fff;color:#34415a;border-radius:14px;box-shadow:0 7px 20px rgba(43,57,77,.055)}
+#accountModal.memberTheme .premiumAccountActions button span{width:32px;height:32px;border-radius:11px;display:grid;place-items:center;margin:auto auto 5px;color:#fff;background:linear-gradient(145deg,#59cfb0,#51b4df)}
+#accountModal.memberTheme .withdrawAction span{background:linear-gradient(145deg,#7298ff,#7165e8)}#accountModal.memberTheme .cardAction span{background:linear-gradient(145deg,#ffa455,#ff6f77)}
+#accountModal.memberTheme .memberStats{background:#fff;border:1px solid #e9edf3;border-radius:14px;box-shadow:0 8px 24px rgba(45,57,79,.05)}
+#accountModal.memberTheme .memberStats>div{border-color:#edf0f5}#accountModal.memberTheme .memberStats b{color:#28354a}#accountModal.memberTheme .memberStats small{color:#8791a3}
+#accountModal.memberTheme .premiumMemberGrid{margin-top:12px;padding:8px;background:#fff;border:1px solid #e9edf3;border-radius:16px;box-shadow:0 8px 24px rgba(45,57,79,.05)}
+#accountModal.memberTheme .premiumMemberGrid button{min-height:82px;background:#fff;color:#4f5b70;border:0;border-radius:12px}
+#accountModal.memberTheme .premiumMemberGrid button:active{background:#f1f5f8}
+#accountModal.memberTheme .premiumMemberGrid i{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;margin:0 auto 7px;background:linear-gradient(145deg,#fff8dc,#fff1bb);color:#ca9b3c;font-size:17px;box-shadow:inset 0 0 0 1px #f3e5ac}
+#accountModal.memberTheme .premiumMemberGrid span{font-size:8px;color:#576279}#accountModal.memberTheme .premiumMemberGrid em{background:#ee486a;color:#fff}
+#accountModal.memberTheme .logoutAccount{background:#fff!important;border:1px solid #efdae0!important;color:#d94964!important}
+
+.moneyPageModal{background:#f5f7fb}.moneyPage{background:#f8f9fc;color:#27344a}
+.moneyTop{position:sticky;top:0;z-index:3;background:rgba(255,255,255,.93);backdrop-filter:blur(14px);border-bottom:1px solid #edf0f4;color:#303b50}
+.moneyBody{padding:15px 13px 98px}
+.paymentMethodBtn,.withdrawMethodBtn{border-radius:13px!important;background:#fff!important;border:1px solid #e6ebf2!important;box-shadow:0 7px 20px rgba(46,59,79,.045)}
+.paymentMethodBtn.selected,.withdrawMethodBtn.selected{border-color:#6962ee!important;box-shadow:0 0 0 2px rgba(105,98,238,.1),0 8px 20px rgba(46,59,79,.05)}
+.amountGrid button{border-radius:11px!important;background:#fff!important;color:#41506a!important;border:1px solid #e4e9f0!important}.amountGrid button.active{background:#6556ea!important;color:#fff!important;border-color:#6556ea!important}
+.amountInput,.txidInput,.payoutNumberInput{background:#fff!important;border-color:#e4e9f0!important;border-radius:12px!important;color:#2b3850!important}.amountInput input,.txidInput input,.payoutNumberInput input{color:#2b3850!important}
+.moneyNext{border-radius:12px!important;box-shadow:0 12px 24px rgba(96,77,228,.14)}
+
+.startupSplash{background:radial-gradient(circle at 50% 38%,rgba(33,211,198,.17),transparent 220px),linear-gradient(180deg,#071923,#061217 70%,#050d11);transition:opacity .42s ease,visibility .42s ease}
+.splashAura{position:absolute;width:250px;height:250px;border-radius:50%;border:1px solid rgba(73,217,205,.12);box-shadow:0 0 80px rgba(35,207,194,.08);animation:splashAura 2.4s ease-in-out infinite}
+.splashBrand{position:relative;display:flex;align-items:center;gap:12px}
+.splashLogo{width:68px;height:68px;border-radius:20px;background:linear-gradient(145deg,#21d4c3,#5e5bea);box-shadow:0 18px 48px rgba(52,183,184,.22),inset 0 1px 0 rgba(255,255,255,.25)}
+.splashLogo span{font-size:23px;letter-spacing:-1px}.splashWordmark{text-align:left}.splashWordmark b{margin:0;font-size:20px;letter-spacing:-.5px}.splashWordmark b span{color:#61e6d6}.splashWordmark small{display:block;margin-top:4px;color:#688a91;font-size:6px;letter-spacing:1.4px}
+.splashStatus{position:relative;text-align:center;margin-top:25px}.splashStatus strong{display:block;font-size:10px;color:#dce9e9}.splashStatus span{display:block;margin-top:5px;font-size:7px;color:#67858b;letter-spacing:.35px}
+.splashProgress{position:relative;width:190px;height:4px;margin-top:15px;background:rgba(255,255,255,.075)}.splashProgress span{width:34%;background:linear-gradient(90deg,#25d3c4,#625cf0,#27d6c6);box-shadow:0 0 12px rgba(45,210,198,.35)}
+.splashDots{position:relative;margin-top:12px}@keyframes splashAura{50%{transform:scale(1.08);opacity:.55}}
+
+.actionLoading{background:rgba(7,12,23,.58);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);transition:opacity .2s ease,visibility .2s ease}
+.actionLoadingCard{width:min(82vw,328px);display:flex;align-items:center;gap:15px;text-align:left;padding:17px 18px;border-radius:17px;background:linear-gradient(145deg,rgba(20,29,46,.97),rgba(14,22,36,.97));border:1px solid rgba(255,255,255,.105);box-shadow:0 25px 70px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.045)}
+.loadingOrb{position:relative;flex:0 0 54px;width:54px;height:54px;display:grid;place-items:center}.loadingOrb i{position:absolute;inset:0;border-radius:50%;border:2px solid transparent}.loadingOrb i:first-child{border-top-color:#42d7cd;border-right-color:#42d7cd;animation:proSpin 1s linear infinite}.loadingOrb i:nth-child(2){inset:7px;border-bottom-color:#765ff2;border-left-color:#765ff2;animation:proSpinReverse .8s linear infinite}.loadingOrb span{width:28px;height:28px;border-radius:9px;display:grid;place-items:center;background:linear-gradient(145deg,#1fc8bd,#655cf0);font-size:7px;font-weight:1000;color:#fff}
+.loadingCopy{min-width:0;flex:1}.actionLoadingCard b{margin:0;font-size:12px;letter-spacing:-.1px}.actionLoadingCard p{margin:5px 0 0;color:#a9b4c5;font-size:8px;line-height:1.45}
+.loadingStage{display:flex;align-items:center;gap:6px;margin-top:9px;color:#7793a1}.loadingStage span{width:6px;height:6px;border-radius:50%;background:#4ed6c8;box-shadow:0 0 0 4px rgba(78,214,200,.08);animation:stagePulse 1.25s ease infinite}.loadingStage em{font-style:normal;font-size:7px}
+.actionLoadingCard small{margin-top:7px;color:#f2c672;font-size:7px}
+@keyframes proSpin{to{transform:rotate(360deg)}}@keyframes proSpinReverse{to{transform:rotate(-360deg)}}@keyframes stagePulse{50%{opacity:.35;transform:scale(.78)}}
+.topProgress{height:2px}.topProgress i{background:linear-gradient(90deg,#31d7c7,#6a58ee,#ff5683)}
+.networkBar{top:10px;background:rgba(48,27,36,.96);border-color:#744154;padding:9px 14px;box-shadow:0 13px 35px rgba(0,0,0,.28);backdrop-filter:blur(10px)}
+.resultConfirmCard{width:min(88vw,340px);border-radius:18px!important;background:linear-gradient(155deg,#182235,#121a2a)!important;border:1px solid rgba(255,255,255,.08)!important;box-shadow:0 25px 75px rgba(0,0,0,.4)!important}
+.resultIcon{box-shadow:0 10px 24px rgba(0,0,0,.12)}.toast{border-radius:999px!important;backdrop-filter:blur(12px);box-shadow:0 12px 35px rgba(0,0,0,.25)!important}
+
+.gameSkeleton{background:#15343b!important}.gameSkeleton .skeletonBlock,.gameSkeleton span,.gameSkeleton small{background:rgba(255,255,255,.075)!important}.gameSkeleton:before{background:linear-gradient(90deg,transparent,rgba(255,255,255,.105),transparent);animation-duration:1.35s}
+
+.adminShell{background:linear-gradient(180deg,#101827,#0d1421)!important;border-color:#26354b!important;box-shadow:0 30px 90px rgba(0,0,0,.45)!important}
+.adminTop{background:rgba(12,20,34,.88)!important;backdrop-filter:blur(14px);border-bottom:1px solid #26334a!important}
+.adminTabs{scrollbar-width:none}.adminTabs::-webkit-scrollbar{display:none}.adminTabs button{border-radius:9px!important;min-height:36px!important}.adminTabs button.on{background:linear-gradient(135deg,#6253ea,#4b6def)!important;color:#fff!important}
+.adminBlock,.adminUser{border-radius:14px!important;border-color:#28374c!important;background:#121c2b!important}.adminTable{border-collapse:separate!important;border-spacing:0 5px!important}.adminTable td,.adminTable th{padding:9px 7px!important}
+
+@media(max-width:360px){.appTrustStrip{grid-template-columns:28px 1fr auto;padding:0 8px}.trustCopy span{display:none}.promoHero{min-height:152px}.gameGrid{gap:6px}.actionLoadingCard{width:88vw;padding:15px 14px;gap:12px}.loadingOrb{width:48px;height:48px;flex-basis:48px}}
+@media(prefers-reduced-motion:reduce){.splashAura,.splashProgress span,.splashDots i,.gameSkeleton:before,.loadingOrb i{animation:none!important}.modal *{transition:none!important}}
+
+body.gameViewerOpen .appTrustStrip{display:none!important}
+#gameModal .gameWalletFloat,#tbGameBalanceChip{display:none!important}
+
+/* =========================================================
+   V12.12 — Wallet Cards + Finance Notifications
+   ========================================================= */
+.moneyLabelRow{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.moneyLabelRow>span{font-size:8px;font-weight:900;color:#6d7890;background:#fff;border:1px solid #e5eaf1;padding:4px 8px;border-radius:999px}
+.withdrawSavedGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0 10px}
+.withdrawSavedCard{
+  min-height:64px;display:grid;grid-template-columns:34px 1fr 18px;align-items:center;gap:8px;text-align:left;
+  border:1px solid #e5e9f0;background:#fff;color:#27334a;border-radius:13px;padding:9px;
+  box-shadow:0 7px 20px rgba(46,59,79,.045)
+}
+.withdrawSavedCard .walletBrand,.lockedPayoutCard .walletBrand{
+  width:32px;height:32px;border-radius:10px;display:grid;place-items:center;color:#fff;font-weight:1000;font-size:14px
+}
+.walletBrand.bkash{background:linear-gradient(145deg,#e8216b,#c91857)}
+.walletBrand.nagad{background:linear-gradient(145deg,#f48c24,#da5d22)}
+.withdrawSavedCard span:nth-child(2){min-width:0}
+.withdrawSavedCard b{display:block;font-size:9px}.withdrawSavedCard small{display:block;margin-top:3px;color:#8993a5;font-size:7.5px;letter-spacing:.3px}
+.withdrawSavedCard i{font-style:normal;opacity:0;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;background:#6257e8;color:#fff;font-size:9px}
+.withdrawSavedCard.selected{border-color:#675ce9;box-shadow:0 0 0 2px rgba(103,92,233,.10),0 8px 20px rgba(46,59,79,.06)}
+.withdrawSavedCard.selected i{opacity:1}
+.addWithdrawAccountBtn{
+  width:100%;min-height:42px;border:1px dashed #bfc8d7;border-radius:12px;background:#fbfcfe;color:#53617a;font-size:9px;font-weight:900
+}
+.lockedHint{margin-top:8px!important;line-height:1.5}
+.noWithdrawAccount{grid-column:1/-1;padding:18px;border:1px dashed #d8dee8;border-radius:13px;background:#fff;text-align:center}
+.noWithdrawAccount b{display:block;font-size:10px;color:#344158}.noWithdrawAccount span{display:block;margin-top:5px;font-size:8px;color:#8d97a7}
+
+.payoutSettingsCard{padding:14px!important}
+.payoutCardHead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:7px}
+.payoutCardHead small{display:block;color:#7b8495;font-size:6.5px;letter-spacing:1px;font-weight:900}
+.payoutCardHead h3{margin:4px 0 0;color:#263349;font-size:16px}
+.payoutCardHead>b{background:#eef0ff;color:#5d56d9;border:1px solid #dedfff;padding:6px 9px;border-radius:999px;font-size:9px}
+.payoutRule{margin:0 0 12px;padding:10px 11px;border-radius:12px;background:#fff8e8;border:1px solid #f4e4b4;color:#765f2f;font-size:8px;line-height:1.55}
+.payoutAccountSlots{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.lockedPayoutCard{
+  min-height:76px;display:grid;grid-template-columns:36px 1fr auto;align-items:center;gap:8px;padding:10px;
+  border:1px solid #e7ebf1;background:#fff;border-radius:14px;box-shadow:0 8px 22px rgba(41,55,77,.045)
+}
+.lockedPayoutCard>div:nth-child(2){min-width:0}.lockedPayoutCard small{display:block;color:#9099a9;font-size:6px;font-weight:900;letter-spacing:.6px}
+.lockedPayoutCard b{display:block;margin-top:3px;color:#354057;font-size:9px}.lockedPayoutCard strong{display:block;margin-top:3px;color:#657087;font-size:8px}
+.lockedPayoutCard>span{font-size:11px}
+.lockedPayoutCard.empty{display:flex;flex-direction:column;justify-content:center;text-align:center;gap:2px;border-style:dashed;background:#fafbfc;color:#97a0af}
+.lockedPayoutCard.empty>div{font-size:18px;line-height:1}.lockedPayoutCard.empty>span{font-size:8px}.lockedPayoutCard.empty>small{font-size:6px}
+.payoutAddBox{margin-top:13px;padding-top:13px;border-top:1px solid #edf0f4}.payoutAddBox>b{display:block;margin-bottom:9px;color:#344158;font-size:10px}
+.payoutAddBox label{display:block;margin-top:10px;color:#667188;font-size:8px;font-weight:800}
+.payoutAddBox input{width:100%;height:46px;margin-top:6px;border:1px solid #e2e7ee;border-radius:11px;background:#fff;color:#26344b;padding:0 12px;font-size:16px}
+.payoutAddBox .authPrimary{margin-top:10px}
+.payoutAddBox.hidden{display:none!important}
+
+.livePaymentNotice{
+  position:fixed;z-index:11050;left:50%;top:max(12px,env(safe-area-inset-top));transform:translate(-50%,-22px);
+  width:min(calc(100% - 24px),420px);display:grid;grid-template-columns:38px 1fr 28px;align-items:center;gap:9px;
+  padding:10px 10px;border:1px solid rgba(255,255,255,.12);border-radius:15px;
+  background:linear-gradient(145deg,rgba(19,33,47,.97),rgba(15,43,42,.97));color:#fff;
+  box-shadow:0 18px 55px rgba(0,0,0,.34);backdrop-filter:blur(15px);
+  opacity:0;pointer-events:none;transition:.24s ease
+}
+.livePaymentNotice.show{opacity:1;pointer-events:auto;transform:translate(-50%,0)}
+.livePaymentIcon{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(145deg,#23c69e,#4d74ef);font-weight:1000}
+.livePaymentNotice b{display:block;font-size:10px}.livePaymentNotice p{margin:4px 0 0;color:#b6c5c7;font-size:7.5px;line-height:1.45}
+.livePaymentNotice button{width:28px;height:28px;border:0;border-radius:9px;background:rgba(255,255,255,.07);color:#fff}
+@media(max-width:360px){.withdrawSavedGrid,.payoutAccountSlots{grid-template-columns:1fr}}

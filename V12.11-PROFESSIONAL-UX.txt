@@ -1,0 +1,27 @@
+TakaBazar V12.11 — Professional UX / Loading Update
+
+Built after reviewing the supplied screen recording. It follows the interaction ideas, not the third-party branding/artwork.
+
+Upgrades:
+- Premium startup splash and animated progress.
+- Anti-flicker request loader.
+- Loading phases and slow-network status.
+- Refined top progress/offline status.
+- Glass header + compact TakaBazar trust strip.
+- Polished hero, categories, game cards, floating actions and bottom nav.
+- Premium dark login/register experience.
+- Clean light Member account hub inspired by the reference layout.
+- Upgraded profile card, wallet shortcuts, stats and member menu.
+- Cleaner deposit/withdraw flow.
+- Polished success/error modal and toast.
+- Admin styling improved without changing Admin logic.
+- Reduced-motion support.
+
+Preserved:
+- Existing database/users/balances.
+- Central wallet.
+- Deposit/withdraw logic.
+- Installed games.
+- Fullscreen game viewer.
+- V12.10 demo admin logic.
+- All existing API/server behavior.

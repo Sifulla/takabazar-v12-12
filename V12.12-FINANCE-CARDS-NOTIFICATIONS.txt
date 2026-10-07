@@ -1,0 +1,18 @@
+TakaBazar V12.12 — Finance Cards & Notifications
+
+Changes requested:
+- Deposit/withdraw/card/password area upgraded.
+- Each user can save up to 4 withdrawal accounts.
+- Accounts can be bKash or Nagad in any combination.
+- Once an account is saved, it cannot be edited or deleted from the user interface/API.
+- The same wallet number may be added more than once in different slots.
+- Withdrawal requests must select one of the saved locked accounts.
+- Old single withdrawal account is migrated into Slot 1 automatically when possible.
+- Password update now ends other old sessions and creates a success notification.
+- Admin-approved Deposit creates a Bengali success notification.
+- Admin-approved Withdrawal creates a Bengali success notification.
+- While the site is open, notifications are polled every 10 seconds; new successful deposit/withdrawal notifications appear as a top in-app banner and refresh wallet/payment history.
+- Existing games/admin/loading/UI from V12.11 remain unchanged.
+
+Update:
+Copy the existing data folder when moving from V12.11 to V12.12 so users/balances/requests stay preserved.

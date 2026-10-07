@@ -1,0 +1,30 @@
+TakaBazar V9 — Smart Loading & UX
+
+Added based on the latest screen recording:
+- Center processing overlay with spinner
+- Dynamic Bengali loading messages
+- Slow-network message after 5 seconds
+- 20-second request timeout with clear error
+- Offline/online connection indicator
+- Top progress bar for navigation/actions
+- Startup splash with animated dots + progress
+- Game-card skeleton loading
+- Login/Register loading and result feedback
+- Game opening loading
+- Bet processing loading
+- Deposit/Withdraw request processing loading
+- Payment-account save loading
+- Password-change loading
+- Admin login/loading
+- Deposit/withdraw approve/reject loading
+- Game ZIP install loading
+- Success/error result modal
+- Double-click protection via blocking loading overlay
+- Existing V8 member dashboard, V7 managers, wallet, bKash/Nagad and game manager kept
+
+Termux update:
+CTRL+C
+cd ~ && rm -rf takabazar-v9 && unzip -o ~/storage/downloads/takabazar-v9-smart-loading.zip -d ~/takabazar-v9 && mkdir -p ~/takabazar-v9/data && (cp ~/takabazar-v8/data/takabazar.sqlite* ~/takabazar-v9/data/ 2>/dev/null || cp ~/takabazar-v7/data/takabazar.sqlite* ~/takabazar-v9/data/ 2>/dev/null || true) && cd ~/takabazar-v9 && npm install && npm start
+
+Open:
+http://localhost:3000
