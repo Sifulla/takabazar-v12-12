@@ -6,3 +6,6 @@ npm-debug.log*
 node_modules/
 data/*.sqlite*
 data/game-assets/
+
+.v12-14-backup-*/
+.v12-14-1-safe-backup-*/
