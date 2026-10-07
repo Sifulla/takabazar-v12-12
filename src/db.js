@@ -91,6 +91,18 @@ CREATE TABLE IF NOT EXISTS notifications(
  id INTEGER PRIMARY KEY AUTOINCREMENT,user_id INTEGER NOT NULL,title TEXT NOT NULL,message TEXT NOT NULL,type TEXT NOT NULL DEFAULT 'info',is_read INTEGER NOT NULL DEFAULT 0,created_at TEXT NOT NULL,
  FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+CREATE TABLE IF NOT EXISTS payout_accounts(
+ id INTEGER PRIMARY KEY AUTOINCREMENT,
+ user_id INTEGER NOT NULL,
+ slot_no INTEGER NOT NULL,
+ method TEXT NOT NULL,
+ number TEXT NOT NULL,
+ locked INTEGER NOT NULL DEFAULT 1,
+ created_at TEXT NOT NULL,
+ FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,
+ UNIQUE(user_id,slot_no)
+);
+CREATE INDEX IF NOT EXISTS idx_payout_accounts_user ON payout_accounts(user_id,slot_no);
 CREATE TABLE IF NOT EXISTS settings(key TEXT PRIMARY KEY,value TEXT NOT NULL,updated_at TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS game_versions(
  id INTEGER PRIMARY KEY AUTOINCREMENT,slug TEXT NOT NULL,version TEXT NOT NULL,manifest_json TEXT NOT NULL,created_at TEXT NOT NULL,
@@ -117,6 +129,16 @@ CREATE INDEX IF NOT EXISTS idx_crash_bet_round ON crash_bets(round_id,status);
 `);
 for(const [n,d] of [["payment_method","TEXT NOT NULL DEFAULT ''"],["payment_number","TEXT NOT NULL DEFAULT ''"],["payment_ref","TEXT NOT NULL DEFAULT ''"]])ensureColumn("deposits",n,d);
 for(const [n,d] of [["payout_method","TEXT NOT NULL DEFAULT ''"],["payout_number","TEXT NOT NULL DEFAULT ''"]])ensureColumn("withdrawals",n,d);
+
+// One-time compatibility migration from the old single payout fields.
+// Duplicate numbers are intentionally allowed in payout_accounts.
+for(const u of db.prepare("SELECT id,payout_method,payout_number FROM users WHERE payout_method IN ('bkash','nagad') AND payout_number LIKE '01_________'").all()){
+  const has=db.prepare("SELECT id FROM payout_accounts WHERE user_id=? LIMIT 1").get(u.id);
+  if(!has){
+    db.prepare("INSERT INTO payout_accounts(user_id,slot_no,method,number,locked,created_at) VALUES(?,?,?,?,1,?)")
+      .run(u.id,1,u.payout_method,u.payout_number,new Date().toISOString());
+  }
+}
 
 const now=new Date().toISOString();
 const setDefault=(key,value)=>db.prepare("INSERT OR IGNORE INTO settings(key,value,updated_at) VALUES(?,?,?)").run(key,String(value),now);

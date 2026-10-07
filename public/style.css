@@ -380,3 +380,67 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
 
 body.gameViewerOpen .appTrustStrip{display:none!important}
 #gameModal .gameWalletFloat,#tbGameBalanceChip{display:none!important}
+
+/* =========================================================
+   V12.12 — Wallet Cards + Finance Notifications
+   ========================================================= */
+.moneyLabelRow{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.moneyLabelRow>span{font-size:8px;font-weight:900;color:#6d7890;background:#fff;border:1px solid #e5eaf1;padding:4px 8px;border-radius:999px}
+.withdrawSavedGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0 10px}
+.withdrawSavedCard{
+  min-height:64px;display:grid;grid-template-columns:34px 1fr 18px;align-items:center;gap:8px;text-align:left;
+  border:1px solid #e5e9f0;background:#fff;color:#27334a;border-radius:13px;padding:9px;
+  box-shadow:0 7px 20px rgba(46,59,79,.045)
+}
+.withdrawSavedCard .walletBrand,.lockedPayoutCard .walletBrand{
+  width:32px;height:32px;border-radius:10px;display:grid;place-items:center;color:#fff;font-weight:1000;font-size:14px
+}
+.walletBrand.bkash{background:linear-gradient(145deg,#e8216b,#c91857)}
+.walletBrand.nagad{background:linear-gradient(145deg,#f48c24,#da5d22)}
+.withdrawSavedCard span:nth-child(2){min-width:0}
+.withdrawSavedCard b{display:block;font-size:9px}.withdrawSavedCard small{display:block;margin-top:3px;color:#8993a5;font-size:7.5px;letter-spacing:.3px}
+.withdrawSavedCard i{font-style:normal;opacity:0;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;background:#6257e8;color:#fff;font-size:9px}
+.withdrawSavedCard.selected{border-color:#675ce9;box-shadow:0 0 0 2px rgba(103,92,233,.10),0 8px 20px rgba(46,59,79,.06)}
+.withdrawSavedCard.selected i{opacity:1}
+.addWithdrawAccountBtn{
+  width:100%;min-height:42px;border:1px dashed #bfc8d7;border-radius:12px;background:#fbfcfe;color:#53617a;font-size:9px;font-weight:900
+}
+.lockedHint{margin-top:8px!important;line-height:1.5}
+.noWithdrawAccount{grid-column:1/-1;padding:18px;border:1px dashed #d8dee8;border-radius:13px;background:#fff;text-align:center}
+.noWithdrawAccount b{display:block;font-size:10px;color:#344158}.noWithdrawAccount span{display:block;margin-top:5px;font-size:8px;color:#8d97a7}
+
+.payoutSettingsCard{padding:14px!important}
+.payoutCardHead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:7px}
+.payoutCardHead small{display:block;color:#7b8495;font-size:6.5px;letter-spacing:1px;font-weight:900}
+.payoutCardHead h3{margin:4px 0 0;color:#263349;font-size:16px}
+.payoutCardHead>b{background:#eef0ff;color:#5d56d9;border:1px solid #dedfff;padding:6px 9px;border-radius:999px;font-size:9px}
+.payoutRule{margin:0 0 12px;padding:10px 11px;border-radius:12px;background:#fff8e8;border:1px solid #f4e4b4;color:#765f2f;font-size:8px;line-height:1.55}
+.payoutAccountSlots{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.lockedPayoutCard{
+  min-height:76px;display:grid;grid-template-columns:36px 1fr auto;align-items:center;gap:8px;padding:10px;
+  border:1px solid #e7ebf1;background:#fff;border-radius:14px;box-shadow:0 8px 22px rgba(41,55,77,.045)
+}
+.lockedPayoutCard>div:nth-child(2){min-width:0}.lockedPayoutCard small{display:block;color:#9099a9;font-size:6px;font-weight:900;letter-spacing:.6px}
+.lockedPayoutCard b{display:block;margin-top:3px;color:#354057;font-size:9px}.lockedPayoutCard strong{display:block;margin-top:3px;color:#657087;font-size:8px}
+.lockedPayoutCard>span{font-size:11px}
+.lockedPayoutCard.empty{display:flex;flex-direction:column;justify-content:center;text-align:center;gap:2px;border-style:dashed;background:#fafbfc;color:#97a0af}
+.lockedPayoutCard.empty>div{font-size:18px;line-height:1}.lockedPayoutCard.empty>span{font-size:8px}.lockedPayoutCard.empty>small{font-size:6px}
+.payoutAddBox{margin-top:13px;padding-top:13px;border-top:1px solid #edf0f4}.payoutAddBox>b{display:block;margin-bottom:9px;color:#344158;font-size:10px}
+.payoutAddBox label{display:block;margin-top:10px;color:#667188;font-size:8px;font-weight:800}
+.payoutAddBox input{width:100%;height:46px;margin-top:6px;border:1px solid #e2e7ee;border-radius:11px;background:#fff;color:#26344b;padding:0 12px;font-size:16px}
+.payoutAddBox .authPrimary{margin-top:10px}
+.payoutAddBox.hidden{display:none!important}
+
+.livePaymentNotice{
+  position:fixed;z-index:11050;left:50%;top:max(12px,env(safe-area-inset-top));transform:translate(-50%,-22px);
+  width:min(calc(100% - 24px),420px);display:grid;grid-template-columns:38px 1fr 28px;align-items:center;gap:9px;
+  padding:10px 10px;border:1px solid rgba(255,255,255,.12);border-radius:15px;
+  background:linear-gradient(145deg,rgba(19,33,47,.97),rgba(15,43,42,.97));color:#fff;
+  box-shadow:0 18px 55px rgba(0,0,0,.34);backdrop-filter:blur(15px);
+  opacity:0;pointer-events:none;transition:.24s ease
+}
+.livePaymentNotice.show{opacity:1;pointer-events:auto;transform:translate(-50%,0)}
+.livePaymentIcon{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(145deg,#23c69e,#4d74ef);font-weight:1000}
+.livePaymentNotice b{display:block;font-size:10px}.livePaymentNotice p{margin:4px 0 0;color:#b6c5c7;font-size:7.5px;line-height:1.45}
+.livePaymentNotice button{width:28px;height:28px;border:0;border-radius:9px;background:rgba(255,255,255,.07);color:#fff}
+@media(max-width:360px){.withdrawSavedGrid,.payoutAccountSlots{grid-template-columns:1fr}}

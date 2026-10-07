@@ -173,8 +173,8 @@
 <div class="modal" id="securityModal">
   <div class="simpleConfirm securityCard">
     <button class="confirmClose" onclick="closeModal('securityModal')">×</button>
-    <h3>Security Center</h3>
-    <p>আপনার account password পরিবর্তন করুন।</p>
+    <h3>পাসওয়ার্ড আপডেট</h3>
+    <p>বর্তমান পাসওয়ার্ড দিয়ে নতুন পাসওয়ার্ড সেট করুন। সফল হলে অন্য ডিভাইসের পুরনো সেশন বন্ধ হবে।</p>
     <input id="currentPassword" type="password" placeholder="Current password">
     <input id="newPassword" type="password" placeholder="New password (min 6)">
     <input id="confirmPassword" type="password" placeholder="Confirm new password">
@@ -235,7 +235,15 @@
           </button>
         </div>
       </div>
-      <div id="withdrawAccountArea" class="hidden"><p class="moneyLabel"><i></i> উত্তোলন অ্যাকাউন্ট</p><div class="methodGrid depositMethodGrid"><button class="selected withdrawMethodBtn" id="withdrawBkashBtn" onclick="selectWithdrawMethod(this,'bkash')"><span class="bkashMark">b</span><b>bKash</b><small>Receive</small></button><button class="withdrawMethodBtn" id="withdrawNagadBtn" onclick="selectWithdrawMethod(this,'nagad')"><span class="nagadMark">N</span><b>Nagad</b><small>Receive</small></button></div><div class="amountInput payoutNumberInput"><span>☎</span><input id="withdrawNumber" inputmode="numeric" maxlength="11" placeholder="01XXXXXXXXX" oninput="syncMoneyButton()"></div><p class="moneyHint">এই account পরবর্তী withdrawal-এর জন্যও save হবে।</p></div>
+      <div id="withdrawAccountArea" class="hidden">
+        <div class="moneyLabelRow">
+          <p class="moneyLabel"><i></i> উত্তোলন অ্যাকাউন্ট</p>
+          <span id="withdrawAccountCount">0/4</span>
+        </div>
+        <div class="withdrawSavedGrid" id="withdrawAccountList"></div>
+        <button type="button" class="addWithdrawAccountBtn" onclick="closeModal('moneyModal');openPayoutSettings()">＋ নতুন bKash/Nagad অ্যাকাউন্ট</button>
+        <p class="moneyHint lockedHint">🔒 একবার সেভ করা নম্বর পরিবর্তন/ডিলিট করা যাবে না। একই নম্বর চাইলে আবার নতুন slot-এ যোগ করা যাবে।</p>
+      </div>
 
       <p class="moneyLabel"><i></i> পরিমাণ</p>
       <div class="amountGrid"><button onclick="selectAmount(100)">100</button><button onclick="selectAmount(300)">300</button><button onclick="selectAmount(500)">500</button><button onclick="selectAmount(1000)">1,000</button><button onclick="selectAmount(3000)">3,000</button><button onclick="selectAmount(5000)">5,000</button><button onclick="selectAmount(10000)">10,000</button><button onclick="selectAmount(20000)">20,000</button></div>
@@ -275,11 +283,39 @@
 </div>
 
 <!-- Withdrawal account -->
-<div class="modal pageModal" id="payoutModal"><div class="accountPage payoutPage"><div class="accountTop"><button onclick="closeModal('payoutModal')">‹</button><b>উত্তোলন অ্যাকাউন্ট</b><span></span></div><div class="payoutSettingsCard"><p>আপনার bKash অথবা Nagad receiving account save করুন।</p><div class="methodGrid depositMethodGrid"><button class="selected payoutMethodBtn" id="payoutBkashBtn" onclick="selectPayoutMethod(this,'bkash')"><span class="bkashMark">b</span><b>bKash</b></button><button class="payoutMethodBtn" id="payoutNagadBtn" onclick="selectPayoutMethod(this,'nagad')"><span class="nagadMark">N</span><b>Nagad</b></button></div><label>Mobile wallet number<input id="payoutNumber" inputmode="numeric" maxlength="11" placeholder="01XXXXXXXXX"></label><button class="authPrimary" onclick="savePayoutSettings()">Save Account</button></div></div></div>
+<div class="modal pageModal" id="payoutModal">
+  <div class="accountPage payoutPage">
+    <div class="accountTop"><button onclick="closeModal('payoutModal')">‹</button><b>উত্তোলন কার্ড</b><span></span></div>
+    <div class="payoutSettingsCard">
+      <div class="payoutCardHead">
+        <div><small>LOCKED WALLET CARDS</small><h3>আপনার উত্তোলন অ্যাকাউন্ট</h3></div>
+        <b id="payoutSlotCount">0/4</b>
+      </div>
+      <p class="payoutRule">সর্বোচ্চ ৪টি bKash/Nagad নম্বর যোগ করতে পারবেন। সেভ হওয়ার পর কোনো কার্ড পরিবর্তন বা ডিলিট করা যাবে না। একই নম্বর একাধিক slot-এ যোগ করা যাবে।</p>
+      <div id="payoutAccountSlots" class="payoutAccountSlots"></div>
+
+      <div class="payoutAddBox" id="payoutAddBox">
+        <b>নতুন কার্ড যোগ করুন</b>
+        <div class="methodGrid depositMethodGrid">
+          <button class="selected payoutMethodBtn" id="payoutBkashBtn" onclick="selectPayoutMethod(this,'bkash')"><span class="bkashMark">b</span><b>bKash</b></button>
+          <button class="payoutMethodBtn" id="payoutNagadBtn" onclick="selectPayoutMethod(this,'nagad')"><span class="nagadMark">N</span><b>Nagad</b></button>
+        </div>
+        <label>Mobile wallet number<input id="payoutNumber" inputmode="numeric" maxlength="11" placeholder="01XXXXXXXXX"></label>
+        <button class="authPrimary" id="savePayoutAccountBtn" onclick="savePayoutSettings()">কার্ড সেভ করুন</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Admin kept from V2 -->
 <div class="modal adminModal" id="adminModal"><div class="adminShell"><div class="adminTop"><div><b>TAKABAZAR ADMIN</b><small>Control center</small></div><button onclick="closeModal('adminModal')">Close</button></div><div class="stats" id="adminStats"></div><div class="adminTabs"><button class="on" onclick="adminTab('users',this)">Users</button><button onclick="adminTab('payments',this)">Wallet Requests</button><button onclick="adminTab('games',this)">Game Manager</button><button onclick="adminTab('content',this)">Content</button><button onclick="adminTab('notify',this)">Notifications</button><button onclick="adminTab('bets',this)">Bets</button><button onclick="adminTab('support',this)">Support</button><button onclick="adminTab('audit',this)">Audit</button></div><div id="adminContent" class="adminContent"></div></div></div>
 <!-- V9 smart loading / network UX -->
+<div class="livePaymentNotice" id="livePaymentNotice">
+  <div class="livePaymentIcon" id="livePaymentIcon">✓</div>
+  <div><b id="livePaymentTitle">লেনদেন সফল</b><p id="livePaymentMessage"></p></div>
+  <button type="button" onclick="hideLivePaymentNotice()">×</button>
+</div>
+
 <div class="topProgress" id="topProgress"><i></i></div>
 
 <div class="networkBar" id="networkBar">
